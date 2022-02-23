@@ -9,38 +9,38 @@ import { KafkaMicroserviceService } from "./kafka-microservice.service";
 @Module({
   imports: [
     ConfigModule,
-    ClientsModule.registerAsync([
-      {
-        imports: [ConfigModule],
-        name: "KAFKA_SERVICE",
-        useFactory: (configService: ConfigService) => {
-          console.info(
-            "Using kafka client - ",
-            configService.get("kafka.brokers"),
-          );
+    // ClientsModule.registerAsync([
+    //   {
+    //     imports: [ConfigModule],
+    //     name: "KAFKA_SERVICE",
+    //     useFactory: (configService: ConfigService) => {
+    //       console.info(
+    //         "Using kafka client - ",
+    //         configService.get("kafka.brokers"),
+    //       );
 
-          return {
-            name: "KAFKA_SERVICE",
-            transport: Transport.KAFKA,
-            options: {
-              client: {
-                clientId: "internal-tools-kafka",
-                brokers: configService.get("kafka.brokers").split(","),
-              },
-              consumer: {
-                groupId: "internal-tools-kafka",
-                readUncommitted: true,
-                allowAutoTopicCreation: true,
-              },
-              subscribe: {
-                fromBeginning: true,
-              },
-            },
-          };
-        },
-        inject: [ConfigService],
-      },
-    ]),
+    //       return {
+    //         name: "KAFKA_SERVICE",
+    //         transport: Transport.KAFKA,
+    //         options: {
+    //           client: {
+    //             clientId: "internal-tools-kafka",
+    //             brokers: configService.get("kafka.brokers").split(","),
+    //           },
+    //           consumer: {
+    //             groupId: "internal-tools-kafka",
+    //             readUncommitted: true,
+    //             allowAutoTopicCreation: true,
+    //           },
+    //           subscribe: {
+    //             fromBeginning: true,
+    //           },
+    //         },
+    //       };
+    //     },
+    //     inject: [ConfigService],
+    //   },
+    // ]),
   ],
   controllers: [KafkaMicroserviceController],
   providers: [KafkaMicroserviceService],

@@ -22,11 +22,19 @@ import Utils from "src/utils";
 export class KafkaConsumerService
   implements OnModuleInit, OnModuleDestroy, OnApplicationShutdown
 {
-  constructor() {}
+  constructor() {
+    console.log("empty constructor");
+  }
 
-  async onModuleInit() {}
+  async onModuleInit() {
+    console.log("empty module init");
+  }
 
-  async onModuleDestroy() {}
+  async onModuleDestroy() {
+    console.log("empty module destroy");
+  }
 
-  async onApplicationShutdown(signal?: string) {}
+  async onApplicationShutdown(signal?: string) {
+    console.log("empty application shutdown");
+  }
 }

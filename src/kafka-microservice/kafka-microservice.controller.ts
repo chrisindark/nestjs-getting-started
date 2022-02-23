@@ -31,17 +31,17 @@ export class KafkaMicroserviceController
   implements OnModuleInit, OnModuleDestroy, OnApplicationShutdown
 {
   constructor(
-    @Inject("KAFKA_SERVICE")
-    private clientKafka: ClientKafka,
+    // @Inject("KAFKA_SERVICE")
+    // private clientKafka: ClientKafka,
     private readonly kafkaMicroserviceService: KafkaMicroserviceService,
   ) {}
 
   async onModuleInit() {
     try {
-      this.clientKafka.subscribeToResponseOf("firstTopic");
-      this.clientKafka.subscribeToResponseOf("secondTopic");
-      const res: Producer = await this.clientKafka.connect();
-      console.log(res);
+      // this.clientKafka.subscribeToResponseOf("firstTopic");
+      // this.clientKafka.subscribeToResponseOf("secondTopic");
+      // const res: Producer = await this.clientKafka.connect();
+      // console.log(res);
     } catch (e) {
       console.error(e);
       // send the error to apm or sentry or both
@@ -49,11 +49,13 @@ export class KafkaMicroserviceController
   }
 
   async onModuleDestroy() {
-    const res = await this.clientKafka.close();
-    console.log(res);
+    // const res = await this.clientKafka.close();
+    // console.log(res);
   }
 
-  async onApplicationShutdown(signal?: string) {}
+  async onApplicationShutdown(signal?: string) {
+    // console.log(signal);
+  }
 
   @EventPattern("firstTopic")
   async handleFirstEntityCreated(data: any) {
@@ -110,9 +112,9 @@ export class KafkaMicroserviceController
 
   async publishMessage(topic, message) {
     try {
-      const res = this.clientKafka.emit(topic, message).pipe(timeout(5000));
+      // const res = this.clientKafka.emit(topic, message).pipe(timeout(5000));
       // console.log(res);
-      return res;
+      // return res;
     } catch (e) {
       Logger.error(e, "", "KAFKAMICROSERVICE");
       // let options = {

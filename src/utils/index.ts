@@ -5,8 +5,6 @@ import * as apm from "elastic-apm-node";
 import { v4 as uuidv4 } from "uuid";
 
 class Utils {
-  static CDN_IMAGE_URL_BASE = `https://cdn.trell.co/cdn-cgi/image/w={{SIZE}},h={{SIZE}},fit=scale-down/images/orig`;
-
   static catchWithApm(error, options, context = null) {
     if (context) {
       apm.setCustomContext(context);
@@ -15,38 +13,6 @@ class Utils {
     apm.captureError(error, options, (err, id) => {
       // console.debug(err, id);
     });
-  }
-
-  static getModifiedVideoUrl(url: string, type: string): string {
-    if (!url) return "";
-
-    let replaceString = "";
-    if (type === "preview") {
-      replaceString =
-        "https://cdn.trell.co/videos/transformed/h_360,w_360/eo_3/videos/orig/";
-    } else if (type === "original") {
-      replaceString = "https://cdn.trell.co/videos/orig/";
-    } else {
-      replaceString =
-        "https://cdn.trell.co/videos/transformed/h_640,w_640/videos/orig/";
-    }
-
-    return url.replace(
-      `https://res.cloudinary.com/trell/video/upload/user-videos/videos/orig/`,
-      replaceString,
-    );
-  }
-
-  static getModifiedImageUrl(url: string, type: "small" | "large"): string {
-    if (!url) return "";
-    const split = url.split("/");
-    const id = split[split.length - 1];
-    return url.replace(
-      `https://d2homc9nx3ot5e.cloudfront.net/expresso/uploads/`,
-      type === "small"
-        ? `https://cdn.trell.co/w=360,h=360,fit=scale-down/user-images/images/orig/`
-        : `https://cdn.trell.co/w=640,h=640,fit=scale-down/user-images/images/orig/`,
-    );
   }
 
   static getInQueryString(length: number): string {
@@ -89,20 +55,13 @@ class Utils {
     return obj;
   };
 
-  static getTrailShareUrl = (slug) => {
-    if (slug) {
-      return `https://app.trell.co/${slug}`;
-    }
-    return "";
-  };
-
   static getCurrentWeek = () => {
-    let curr = new Date();
-    let week = [];
+    const curr = new Date();
+    const week = [];
 
     for (let i = 1; i <= 7; i++) {
-      let first = curr.getDate() - curr.getDay() + i;
-      let day = new Date(curr.setDate(first)).toISOString().slice(0, 10);
+      const first = curr.getDate() - curr.getDay() + i;
+      const day = new Date(curr.setDate(first)).toISOString().slice(0, 10);
       week.push(day);
     }
     // console.log(week);
@@ -110,12 +69,12 @@ class Utils {
   };
 
   static getLastWeek = () => {
-    let d = new Date();
-    let to = d.setTime(
+    const d = new Date();
+    const to = d.setTime(
       d.getTime() - (d.getDay() ? d.getDay() : 7) * 24 * 60 * 60 * 1000,
     );
-    let from = d.setTime(d.getTime() - 6 * 24 * 60 * 60 * 1000);
-    let week = [new Date(from).toISOString(), new Date(to).toISOString()];
+    const from = d.setTime(d.getTime() - 6 * 24 * 60 * 60 * 1000);
+    const week = [new Date(from).toISOString(), new Date(to).toISOString()];
     return week;
   };
 
@@ -140,7 +99,7 @@ class Utils {
   }
 
   static getFileExtension(filename: string): string {
-    let filenameParts = filename.split(".");
+    const filenameParts = filename.split(".");
     let extension = "";
 
     if (filenameParts.length > 1) {

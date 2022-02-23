@@ -25,9 +25,9 @@ export class KafkaService implements OnApplicationShutdown {
 
   // this function is to connect to kafka client
   connect() {
-    let brokerStr = this.configService.get("kafka.brokers");
+    const brokerStr = this.configService.get("kafka.brokers");
     // brokers will give comma separated string, so we need to split with comma to get list of brokers
-    let brokers = brokerStr.split(",");
+    const brokers = brokerStr.split(",");
 
     try {
       this.client = new Kafka({
@@ -70,7 +70,7 @@ export class KafkaService implements OnApplicationShutdown {
   }
 
   async getConsumer() {
-    let response = null;
+    // const response = null;
     try {
       await this.consumer.connect();
       return this.consumer;
@@ -79,7 +79,7 @@ export class KafkaService implements OnApplicationShutdown {
     }
   }
 
-  //conumes a failed offset
+  // consumes a failed offset
   async consumeOffset(offset, partition) {
     console.log(offset, partition);
 
@@ -123,7 +123,7 @@ export class KafkaService implements OnApplicationShutdown {
   }
 
   async getProducer(): Promise<Producer> {
-    let response = null;
+    // const response = null;
     try {
       await this.producer.connect();
       return this.producer;
@@ -144,7 +144,7 @@ export class KafkaService implements OnApplicationShutdown {
       // console.log(response);
     } catch (e) {
       Logger.error(e, "", "KAFKA");
-      let options = {
+      const options = {
         custom: {
           event: "ERROR",
           error: e,

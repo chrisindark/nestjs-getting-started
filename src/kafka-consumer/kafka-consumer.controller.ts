@@ -23,8 +23,8 @@ import { KafkaConsumerService } from "./kafka-consumer.service";
 @Controller("api/v1/kafkaConsumer")
 export class KafkaConsumerController implements OnModuleInit {
   constructor(
-    @Inject("KAFKA_CONSUMER_SERVICE")
-    private clientKafka: ClientKafka,
+    // @Inject("KAFKA_CONSUMER_SERVICE")
+    // private clientKafka: ClientKafka,
     private kafkaConsumerService: KafkaConsumerService,
   ) {}
 
@@ -71,9 +71,9 @@ export class KafkaConsumerController implements OnModuleInit {
 
   async publishMessage(topic, message) {
     try {
-      const res = this.clientKafka.emit(topic, message).pipe(timeout(5000));
+      // const res = this.clientKafka.emit(topic, message).pipe(timeout(5000));
       // console.log(res);
-      return res;
+      // return res;
     } catch (e) {
       Logger.error(e, "", "KAFKACONSUMER");
       // let options = {

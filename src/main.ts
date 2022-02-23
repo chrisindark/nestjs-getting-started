@@ -17,33 +17,33 @@ async function bootstrap() {
     const brokers = app.get(ConfigService).get("kafka.brokers").split(",");
 
     // This object acts as a kafka consumer
-    const kafkaMicroservice =
-      await app.connectMicroservice<MicroserviceOptions>({
-        transport: Transport.KAFKA,
-        options: {
-          client: {
-            clientId: "internal-tools-kafka",
-            brokers: brokers,
-          },
-          consumer: {
-            groupId: "internal-tools-kafka",
-            readUncommitted: true,
-            allowAutoTopicCreation: true,
-          },
-          subscribe: {
-            fromBeginning: true,
-          },
-        },
-      });
+    // const kafkaMicroservice =
+    //   await app.connectMicroservice<MicroserviceOptions>({
+    //     transport: Transport.KAFKA,
+    //     options: {
+    //       client: {
+    //         clientId: "nestjs-kafka",
+    //         brokers: brokers,
+    //       },
+    //       consumer: {
+    //         groupId: "nestjs-kafka",
+    //         readUncommitted: true,
+    //         allowAutoTopicCreation: true,
+    //       },
+    //       subscribe: {
+    //         fromBeginning: true,
+    //       },
+    //     },
+    //   });
 
-    const redisMicroservice = await app.connectMicroservice({
-      transport: Transport.REDIS,
-      options: {
-        url: "redis://localhost:6379",
-        retryAttempts: 0,
-        retryDelay: 0,
-      },
-    });
+    // const redisMicroservice = await app.connectMicroservice({
+    //   transport: Transport.REDIS,
+    //   options: {
+    //     url: "redis://localhost:6379",
+    //     retryAttempts: 0,
+    //     retryDelay: 0,
+    //   },
+    // });
 
     await app.startAllMicroservices();
     await app.listen(port);

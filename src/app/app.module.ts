@@ -6,6 +6,8 @@ import configuration from "../config/configuration";
 import { KafkaMicroserviceModule } from "src/kafka-microservice/kafka-microservice.module";
 import { KafkaConsumerModule } from "src/kafka-consumer/kafka-consumer.module";
 import { RedisMicroserviceModule } from "src/redis-microservice/redis-microservice.module";
+import { CronModule } from "src/cron/cron.module";
+import { QueueModule } from "src/queue/queue.module";
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { RedisMicroserviceModule } from "src/redis-microservice/redis-microservi
     KafkaMicroserviceModule,
     KafkaConsumerModule,
     RedisMicroserviceModule,
+    QueueModule,
+    CronModule,
   ],
   exports: [],
 })

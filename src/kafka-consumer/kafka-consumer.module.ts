@@ -13,29 +13,29 @@ import { KafkaConsumerService } from "./kafka-consumer.service";
   imports: [ConfigModule],
   controllers: [KafkaConsumerController],
   providers: [
-    {
-      provide: "KAFKA_CONSUMER_SERVICE",
-      useFactory: (configService: ConfigService) => {
-        return ClientProxyFactory.create({
-          transport: Transport.KAFKA,
-          options: {
-            client: {
-              clientId: "internal-tools-kafka",
-              brokers: configService.get("kafka.brokers").split(","),
-            },
-            consumer: {
-              groupId: "internal-tools-kafka",
-              readUncommitted: true,
-              allowAutoTopicCreation: true,
-            },
-            subscribe: {
-              fromBeginning: true,
-            },
-          },
-        });
-      },
-      inject: [ConfigService],
-    },
+    // {
+    //   provide: "KAFKA_CONSUMER_SERVICE",
+    //   useFactory: (configService: ConfigService) => {
+    //     return ClientProxyFactory.create({
+    //       transport: Transport.KAFKA,
+    //       options: {
+    //         client: {
+    //           clientId: "internal-tools-kafka",
+    //           brokers: configService.get("kafka.brokers").split(","),
+    //         },
+    //         consumer: {
+    //           groupId: "internal-tools-kafka",
+    //           readUncommitted: true,
+    //           allowAutoTopicCreation: true,
+    //         },
+    //         subscribe: {
+    //           fromBeginning: true,
+    //         },
+    //       },
+    //     });
+    //   },
+    //   inject: [ConfigService],
+    // },
     KafkaConsumerService,
   ],
 })
