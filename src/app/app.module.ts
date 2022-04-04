@@ -8,6 +8,9 @@ import { KafkaConsumerModule } from "src/kafka-consumer/kafka-consumer.module";
 import { RedisMicroserviceModule } from "src/redis-microservice/redis-microservice.module";
 import { CronModule } from "src/cron/cron.module";
 import { QueueModule } from "src/queue/queue.module";
+import { AppService } from "./app.service";
+import { MyLibraryModule } from "@app/my-library";
+import { MyOtherLibraryModule } from "@app/my-other-library";
 
 @Module({
   imports: [
@@ -25,7 +28,10 @@ import { QueueModule } from "src/queue/queue.module";
     RedisMicroserviceModule,
     QueueModule,
     CronModule,
+    MyLibraryModule,
+    MyOtherLibraryModule,
   ],
+  providers: [AppService],
   exports: [],
 })
 export class AppModule {}

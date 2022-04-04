@@ -19,14 +19,4 @@ import {} from "@nestjs/microservices/external/redis.interface";
 import Utils from "src/utils";
 
 @Injectable()
-export class RedisMicroserviceService
-  implements OnModuleInit, OnModuleDestroy, OnApplicationShutdown
-{
-  constructor() {}
-
-  async onModuleInit() {}
-
-  async onModuleDestroy() {}
-
-  async onApplicationShutdown(signal?: string) {}
-}
+export class RedisMicroserviceService {}
