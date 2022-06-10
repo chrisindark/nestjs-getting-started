@@ -9,8 +9,8 @@ import { RedisMicroserviceModule } from "src/redis-microservice/redis-microservi
 import { CronModule } from "src/cron/cron.module";
 import { QueueModule } from "src/queue/queue.module";
 import { AppService } from "./app.service";
-import { MyLibraryModule } from "@app/my-library";
-import { MyOtherLibraryModule } from "@app/my-other-library";
+import { MyLibraryModule } from "@christopherpaul/my-library";
+import { MyOtherLibraryModule } from "@christopherpaul/my-other-library";
 
 @Module({
   imports: [

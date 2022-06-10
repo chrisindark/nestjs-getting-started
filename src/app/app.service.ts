@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { MyLibraryService } from "@app/my-library";
-import { MyOtherLibraryService } from "@app/my-other-library";
+import { MyLibraryService } from "@christopherpaul/my-library/dist";
+import { MyOtherLibraryService } from "@christopherpaul/my-other-library";
 
 @Injectable()
 export class AppService {

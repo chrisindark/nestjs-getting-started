@@ -14,7 +14,7 @@ async function bootstrap() {
     app.enableCors();
     const port = app.get(ConfigService).get("server.port");
     console.log("Listening on port - ", port);
-    const brokers = app.get(ConfigService).get("kafka.brokers").split(",");
+    // const brokers = app.get(ConfigService).get("kafka.brokers").split(",");
 
     // This object acts as a kafka consumer
     // const kafkaMicroservice =
