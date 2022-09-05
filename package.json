@@ -53,7 +53,7 @@
     "fastify": "3.27.4",
     "fastify-multipart": "4.0.7",
     "ffprobe": "1.1.2",
-    "file-type": "16.5.3",
+    "file-type": "16.5.4",
     "form-urlencoded": "4.5.1",
     "googleapis": "63.0.0",
     "ioredis": "4.28.5",
