@@ -22,8 +22,6 @@
     "test:e2e": "jest --config ./apps/nestjs-getting-started/test/jest-e2e.json"
   },
   "dependencies": {
-    "@christopherpaul/my-library": "0.0.6",
-    "@christopherpaul/my-other-library": "0.0.6",
     "@google-cloud/bigquery": "5.9.3",
     "@nestjs/bull": "^0.5.4",
     "@nestjs/common": "8.4.3",

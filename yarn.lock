@@ -512,26 +512,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@christopherpaul/my-library@npm:0.0.6":
-  version: 0.0.6
-  resolution: "@christopherpaul/my-library@npm:0.0.6"
-  checksum: 7c759b7fad268dedffe55d0edf44b3a48fc60622c9ec32e0d563d8d714d8a0e2cd3fe925879ac2a6c7e0517a6bc002797fa56a6a4686a69acf360e9645dbeb38
-  languageName: node
-  linkType: hard
-
-"@christopherpaul/my-other-library@npm:0.0.6":
-  version: 0.0.6
-  resolution: "@christopherpaul/my-other-library@npm:0.0.6"
-  checksum: 50f27b81878007ff22366035755dbd3c372cf92cea1625a43db53af9abb43b065735abb21c3304c433d93195d38caba6d2365d0333676d4188d30c212027d90f
-  languageName: node
-  linkType: hard
-
 "@christopherpaul/nestjs-getting-started@workspace:.":
   version: 0.0.0-use.local
   resolution: "@christopherpaul/nestjs-getting-started@workspace:."
   dependencies:
-    "@christopherpaul/my-library": 0.0.6
-    "@christopherpaul/my-other-library": 0.0.6
     "@google-cloud/bigquery": 5.9.3
     "@nestjs/bull": ^0.5.4
     "@nestjs/cli": 8.2.4
