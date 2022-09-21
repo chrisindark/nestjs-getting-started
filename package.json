@@ -59,7 +59,7 @@
     "ioredis": "4.28.5",
     "json2csv": "5.0.6",
     "kafkajs": "1.15.0",
-    "mongoose": "6.2.7",
+    "mongoose": "6.4.6",
     "mysql": "^2.18.1",
     "node-rsa": "^1.1.1",
     "node-telegram-bot-api": "0.50.0",
