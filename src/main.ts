@@ -1,19 +1,33 @@
-import { MicroserviceOptions, Transport } from "@nestjs/microservices";
+// import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import { NestFactory } from "@nestjs/core";
-import { ValidationPipe } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
 import { AppModule } from "./app/app.module";
+// import { AllExceptionsFilter } from "./exceptions/all-exceptions-filter";
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from "@nestjs/platform-fastify";
 
 async function bootstrap() {
   try {
-    const app = await NestFactory.create(AppModule);
+    const fastifyAdapter = new FastifyAdapter();
+    // fileSize limit = 1GB
+    fastifyAdapter.register(require("fastify-multipart"), {
+      fileSize: 1024 * 1024 * 1024,
+    });
+
+    const app = await NestFactory.create<NestFastifyApplication>(
+      AppModule,
+      fastifyAdapter,
+    );
     // app.useGlobalFilters(new AllExceptionsFilter());
     app.useGlobalPipes(new ValidationPipe());
     app.enableShutdownHooks(["SIGINT", "SIGTERM"]);
     app.enableCors();
     const port = app.get(ConfigService).get("server.port");
-    console.log("Listening on port - ", port);
+    Logger.log(port, "Listening on port");
     // const brokers = app.get(ConfigService).get("kafka.brokers").split(",");
 
     // This object acts as a kafka consumer
@@ -45,10 +59,10 @@ async function bootstrap() {
     //   },
     // });
 
-    await app.startAllMicroservices();
+    // await app.startAllMicroservices();
     await app.listen(port);
   } catch (e) {
-    console.log(e);
+    Logger.log(e);
   }
 }
 

@@ -16,7 +16,7 @@ export class AppService {
 
   getInfo(): any {
     return {
-      name: "internal-tools-kafka",
+      name: "nestjs-getting-started",
     };
   }
 }

@@ -2,18 +2,20 @@ FROM node:14-alpine
 
 WORKDIR /usr/src/consumer
 
-COPY ./package.json ./package.json
-COPY ./package-lock.json ./package-lock.json
+# RUN npm i -g corepack yarn
 
-RUN npm i
+COPY ./package.json ./yarn.lock ./.yarnrc.yml ./
+COPY ./.yarn ./.yarn
+
+RUN yarn install
 
 ARG NODE_ENV=$NODE_ENV
 ENV NODE_ENV $NODE_ENV
 
 COPY . .
 
-RUN npm run build
+RUN yarn run build
 
-EXPOSE 80
+EXPOSE 4000
 
-CMD ["npm", "run", "start"]
+CMD ["yarn", "run", "start"]
