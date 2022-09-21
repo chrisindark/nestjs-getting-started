@@ -13,7 +13,7 @@ yarn start
 
 <!-- apt install haproxy -->
 
-docker build --no-cache -t nestjs-getting-started -f Dockerfile . --build-arg NODE_ENV=development
+docker build --no-cache --platform=linux/amd64 -t nestjs-getting-started -f Dockerfile . --build-arg NODE_ENV=development
 
 docker run --name nestjs-getting-started -i -t -p 4000:4000 nestjs-getting-started:latest
 
