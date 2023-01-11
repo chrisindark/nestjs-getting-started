@@ -44,7 +44,7 @@
     "aws-sdk": "2.988.0",
     "bull": "3.29.2",
     "class-transformer": "0.4.0",
-    "class-validator": "0.12.2",
+    "class-validator": "0.14.0",
     "crypto-js": "4.1.1",
     "csvtojson": "^2.0.10",
     "elastic-apm-node": "3.20.0",
