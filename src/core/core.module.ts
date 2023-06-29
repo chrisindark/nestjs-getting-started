@@ -1,9 +1,9 @@
-import {Module} from '@nestjs/common';
+import { Module } from "@nestjs/common";
 
-import {CommonModule} from '../common/common.module';
+import { CommonModule } from "../common/common.module";
 
 @Module({
   imports: [CommonModule],
-  exports: [CommonModule]
+  exports: [CommonModule],
 })
 export class CoreModule {}

@@ -13,7 +13,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     // const args = host.getArgs();
     const request = ctx.getRequest();
     const response = ctx.getResponse();
-    console.error("exception", exception);
+    // console.error("exception", exception);
     // console.log("request", request.url, request.params, request.body);
     // console.log("response", response);
 
