@@ -12,7 +12,8 @@ import { RedisMicroserviceService } from "./redis-microservice.service";
         name: "REDIS_SERVICE",
         transport: Transport.REDIS,
         options: {
-          url: "redis://localhost:6379",
+          host: "localhost",
+          port: 6379,
         },
       },
     ]),

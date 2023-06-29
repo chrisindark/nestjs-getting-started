@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Connection, Repository } from 'typeorm';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Connection, Repository } from "typeorm";
 
-import {User} from './user.entity';
+import { User } from "./user.entity";
 
 @Injectable()
 export class UsersService {
@@ -11,7 +11,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
-    private readonly connection: Connection
+    private readonly connection: Connection,
   ) {}
 
   findAll(): Promise<User[]> {
@@ -19,7 +19,7 @@ export class UsersService {
   }
 
   findOne(id: number): Promise<User> {
-    return this.usersRepository.findOne(id);
+    return this.usersRepository.findOneBy({ id });
   }
 
   async remove(id: number): Promise<void> {
@@ -43,17 +43,17 @@ export class UsersService {
   }
 
   async createManyCallback(users: User[]) {
-   await this.connection.transaction(async manager => {
-     await manager.save(users[0]);
-     await manager.save(users[1]);
-   });
+    await this.connection.transaction(async (manager) => {
+      await manager.save(users[0]);
+      await manager.save(users[1]);
+    });
   }
 
   find(username: string): Promise<User[]> {
     return this.usersRepository.find({
       where: {
-        username: username,
-      }
+        username,
+      },
     });
   }
 }
