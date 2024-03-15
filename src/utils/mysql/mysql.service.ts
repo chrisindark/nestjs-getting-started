@@ -3,16 +3,16 @@ import {
   Injectable,
   Logger,
   OnApplicationShutdown,
-} from "@nestjs/common";
-import { InjectDataSource } from "@nestjs/typeorm";
-import { DataSource, QueryRunner } from "typeorm";
+} from '@nestjs/common';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource, QueryRunner } from 'typeorm';
 
 @Injectable()
 export class MysqlService implements OnApplicationShutdown {
   constructor(
-    @InjectDataSource("ds1")
+    @InjectDataSource('ds1')
     private readonly dataSource1: DataSource,
-    @InjectDataSource("ds2")
+    @InjectDataSource('ds2')
     private readonly dataSource2: DataSource,
   ) {}
 

@@ -1,6 +1,7 @@
 # compiled output
 /dist
 /node_modules
+/tmp
 
 # Logs
 logs
@@ -42,3 +43,15 @@ lerna-debug.log*
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# env files
+.env.local
+.env.staging
+.env.production
+
+package-lock.json
+
+gcloud.credentials.staging.json
+gcloud.callsjson.credentials.staging.json
+
+.scannerwork

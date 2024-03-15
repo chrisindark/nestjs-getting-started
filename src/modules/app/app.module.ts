@@ -1,11 +1,11 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { WebsocketAppModule } from "src/apps/websocketApp/websocketApp.module";
-import { PingModule } from "src/modules/ping/ping.module";
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { WebsocketAppModule } from 'src/apps/websocketApp/websocketApp.module';
+import { PingModule } from 'src/modules/ping/ping.module';
 
-import configuration from "../config/configuration";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
+import configuration from '../../config/configuration';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 // import { KafkaMicroserviceModule } from "src/kafka-microservice/kafka-microservice.module";
 // import { KafkaConsumerModule } from "src/kafka-consumer/kafka-consumer.module";
@@ -20,11 +20,11 @@ import { AppService } from "./app.service";
   imports: [
     ConfigModule.forRoot({
       envFilePath:
-        process.env.NODE_ENV === "production"
-          ? ".production.env"
-          : process.env.NODE_ENV === "staging"
-          ? ".staging.env"
-          : ".development.env",
+        process.env.NODE_ENV === 'production'
+          ? '.production.env'
+          : process.env.NODE_ENV === 'staging'
+            ? '.staging.env'
+            : '.development.env',
       load: [configuration],
     }),
     // KafkaMicroserviceModule,

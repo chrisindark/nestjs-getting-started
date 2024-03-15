@@ -1,20 +1,20 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { InjectQueue } from "@nestjs/bull";
-import { Queue } from "bull";
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 
 @Injectable()
 export class QueueService {
   constructor(
-    @InjectQueue("CronQueueConsumer")
+    @InjectQueue('CronQueueConsumer')
     private cronQueueConsumer: Queue,
-    @InjectQueue("KafkaQueueConsumer")
+    @InjectQueue('KafkaQueueConsumer')
     private kafkaQueueConsumer: Queue,
   ) {}
 
   async getFromCronQueue(): Promise<any> {
     const response = await this.cronQueueConsumer.add(
-      "getFromCronQueue",
-      { hello: "world" },
+      'getFromCronQueue',
+      { hello: 'world' },
       {
         removeOnComplete: true,
       },
@@ -28,8 +28,8 @@ export class QueueService {
 
   async getFromKafkaQueue(): Promise<any> {
     const response = await this.kafkaQueueConsumer.add(
-      "getFromKafkaQueue",
-      { hello: "world" },
+      'getFromKafkaQueue',
+      { hello: 'world' },
       {
         removeOnComplete: true,
       },

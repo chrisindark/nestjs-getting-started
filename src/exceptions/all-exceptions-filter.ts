@@ -4,7 +4,7 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
-} from "@nestjs/common";
+} from '@nestjs/common';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -44,8 +44,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
       exception instanceof HttpException
         ? exception.getStatus() !== 500
           ? exception.message
-          : "Internal server error"
-        : "Internal server error";
+          : 'Internal server error'
+        : 'Internal server error';
 
     const exceptionResponse = exception.response ? exception.response : {};
 

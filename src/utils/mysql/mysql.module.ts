@@ -1,24 +1,24 @@
-import { Global, Logger, Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { Global, Logger, Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { MysqlService } from "./mysql.service";
+import { MysqlService } from './mysql.service';
 
 @Global()
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      name: "test",
+      name: 'test',
       useFactory: (configService: ConfigService) => {
         return {
-          type: "mysql",
-          name: "test",
-          host: configService.get("MYSQL_DB_HOST"),
-          port: configService.get("MYSQL_DB_PORT"),
-          username: configService.get("MYSQL_DB_USERNAME"),
-          password: configService.get("MYSQL_DB_PASSWORD"),
-          database: configService.get("MYSQL_DB_DATABASE"),
+          type: 'mysql',
+          name: 'test',
+          host: configService.get('MYSQL_DB_HOST'),
+          port: configService.get('MYSQL_DB_PORT'),
+          username: configService.get('MYSQL_DB_USERNAME'),
+          password: configService.get('MYSQL_DB_PASSWORD'),
+          database: configService.get('MYSQL_DB_DATABASE'),
           logging: false,
           synchronize: false,
           multipleStatements: true,

@@ -1,6 +1,6 @@
-import { Global, Module } from "@nestjs/common";
+import { Global, Module } from '@nestjs/common';
 
-import { GCloudPubSubService } from "./gcloudPubSub.service";
+import { GCloudPubSubService } from './gcloudPubSub.service';
 
 @Global()
 @Module({

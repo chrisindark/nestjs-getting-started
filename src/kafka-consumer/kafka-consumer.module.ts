@@ -1,13 +1,13 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import {
   ClientProxyFactory,
   ClientsModule,
   Transport,
-} from "@nestjs/microservices";
+} from '@nestjs/microservices';
 
-import { KafkaConsumerController } from "./kafka-consumer.controller";
-import { KafkaConsumerService } from "./kafka-consumer.service";
+import { KafkaConsumerController } from './kafka-consumer.controller';
+import { KafkaConsumerService } from './kafka-consumer.service';
 
 @Module({
   imports: [ConfigModule],

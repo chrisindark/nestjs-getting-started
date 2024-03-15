@@ -1,8 +1,8 @@
-import { Global, Module } from "@nestjs/common";
-import { APP_INTERCEPTOR } from "@nestjs/core";
+import { Global, Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
-import { SentryInterceptor } from "./sentry.interceptor";
-import { SentryService } from "./sentry.service";
+import { SentryInterceptor } from './sentry.interceptor';
+import { SentryService } from './sentry.service';
 
 @Global()
 @Module({

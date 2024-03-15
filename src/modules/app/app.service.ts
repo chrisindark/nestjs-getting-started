@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 // import { MyLibraryService } from "@christopherpaul/my-library/dist";
 // import { MyOtherLibraryService } from "@christopherpaul/my-other-library";
 
@@ -16,7 +16,7 @@ export class AppService {
 
   getInfo(): any {
     return {
-      name: "nestjs-getting-started",
+      name: 'nestjs-getting-started',
     };
   }
 }

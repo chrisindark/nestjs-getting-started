@@ -4,10 +4,10 @@ import {
   Injectable,
   Logger,
   UnauthorizedException,
-} from "@nestjs/common";
+} from '@nestjs/common';
 
-import { LOGIN_COOKIE_NAME } from "src/constants/constants";
-import { AuthService } from "./auth.service";
+import { LOGIN_COOKIE_NAME } from 'src/constants/constants';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class CookieAuthGuard implements CanActivate {
@@ -25,7 +25,7 @@ export class CookieAuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-    const cookie = loginPass.split("-")[1];
+    const cookie = loginPass.split('-')[1];
     if (!cookie) {
       throw new UnauthorizedException();
     }

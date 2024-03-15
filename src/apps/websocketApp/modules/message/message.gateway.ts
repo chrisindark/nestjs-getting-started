@@ -1,4 +1,4 @@
-import { Logger } from "@nestjs/common";
+import { Logger } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -7,12 +7,12 @@ import {
   WebSocketGateway,
   WebSocketServer,
   WsResponse,
-} from "@nestjs/websockets";
-import { Server, Socket } from "socket.io";
+} from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway(8081, {
   cors: {
-    origin: "*",
+    origin: '*',
   },
 })
 export class MessageGateway
@@ -31,14 +31,14 @@ export class MessageGateway
   }
 
   afterInit(server: Server) {
-    this.logger.log("WebSocket server initialized");
+    this.logger.log('WebSocket server initialized');
   }
 
-  @SubscribeMessage("message")
+  @SubscribeMessage('message')
   async handleMessage(client: Socket, data: any): Promise<WsResponse> {
     console.log(data);
     // const newMessage = await this.messagesService.createMessage(payload);
     // this.wss.emit('message', 'newMessage');
-    return { event: "message", data: "world" };
+    return { event: 'message', data: 'world' };
   }
 }

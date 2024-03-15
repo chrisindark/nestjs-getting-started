@@ -1,6 +1,6 @@
-import { Global, Module } from "@nestjs/common";
+import { Global, Module } from '@nestjs/common';
 
-import { EncryptionService } from "src/utils/encryption/encryption.service";
+import { EncryptionService } from 'src/utils/encryption/encryption.service';
 
 @Global()
 @Module({

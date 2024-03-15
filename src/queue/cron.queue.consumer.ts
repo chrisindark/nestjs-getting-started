@@ -7,14 +7,14 @@ import {
   OnGlobalQueueWaiting,
   OnGlobalQueueCompleted,
   OnGlobalQueueActive,
-} from "@nestjs/bull";
-import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { Job, Queue } from "bull";
-import { promisify } from "util";
+} from '@nestjs/bull';
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { Job, Queue } from 'bull';
+import { promisify } from 'util';
 
 @Injectable()
-@Processor("CronQueueConsumer")
+@Processor('CronQueueConsumer')
 export class CronQueueConsumer {
   constructor(
     private readonly configService: ConfigService,
@@ -120,10 +120,10 @@ export class CronQueueConsumer {
     // );
   }
 
-  @Process("getFromCronQueue")
+  @Process('getFromCronQueue')
   async getFromCronQueue(job: Job) {
-    console.log("getFromCronQueue 30s timeout started", job.data);
+    console.log('getFromCronQueue 30s timeout started', job.data);
     await promisify(setTimeout)(30000);
-    console.log("getFromCronQueue 30s timeout ended");
+    console.log('getFromCronQueue 30s timeout ended');
   }
 }

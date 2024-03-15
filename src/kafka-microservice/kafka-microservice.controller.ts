@@ -6,7 +6,7 @@ import {
   OnApplicationShutdown,
   OnModuleDestroy,
   OnModuleInit,
-} from "@nestjs/common";
+} from '@nestjs/common';
 import {
   Client,
   ClientKafka,
@@ -16,17 +16,17 @@ import {
   MessagePattern,
   Payload,
   Transport,
-} from "@nestjs/microservices";
+} from '@nestjs/microservices';
 import {
   Consumer,
   Producer,
-} from "@nestjs/microservices/external/kafka.interface";
-import { Observable, Subscription, timeout } from "rxjs";
-import Utils from "src/utils";
+} from '@nestjs/microservices/external/kafka.interface';
+import { Observable, Subscription, timeout } from 'rxjs';
+import Utils from 'src/utils';
 
-import { KafkaMicroserviceService } from "./kafka-microservice.service";
+import { KafkaMicroserviceService } from './kafka-microservice.service';
 
-@Controller("api/v1/kafkaMicroservice")
+@Controller('api/v1/kafkaMicroservice')
 export class KafkaMicroserviceController
   implements OnModuleInit, OnModuleDestroy, OnApplicationShutdown
 {
@@ -57,9 +57,9 @@ export class KafkaMicroserviceController
     // console.log(signal);
   }
 
-  @EventPattern("firstTopic")
+  @EventPattern('firstTopic')
   async handleFirstEntityCreated(data: any) {
-    console.log(JSON.stringify(data) + " created in kafka");
+    console.log(JSON.stringify(data) + ' created in kafka');
     // const res = this.clientKafka
     //   .emit("secondTopic", data.value)
     //   .pipe(timeout(5000));
@@ -102,9 +102,9 @@ export class KafkaMicroserviceController
   //   }
   // }
 
-  @Get("/publish")
+  @Get('/publish')
   async publish(): Promise<any> {
-    const res = await this.publishMessage("firstTopic", {
+    const res = await this.publishMessage('firstTopic', {
       value: '{"hello":"world"}',
     });
     return res;
@@ -116,7 +116,7 @@ export class KafkaMicroserviceController
       // console.log(res);
       // return res;
     } catch (e) {
-      Logger.error(e, "", "KAFKAMICROSERVICE");
+      Logger.error(e, '', 'KAFKAMICROSERVICE');
       // let options = {
       //   custom: {
       //     event: "ERROR",

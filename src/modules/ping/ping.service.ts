@@ -3,16 +3,16 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
-} from "@nestjs/common";
+} from '@nestjs/common';
 
-import { SentryService } from "src/interceptors/sentry/sentry.service";
+import { SentryService } from 'src/interceptors/sentry/sentry.service';
 
 @Injectable()
 export class PingService {
   constructor(private readonly sentryService: SentryService) {}
   async ping() {
     return {
-      message: "pong",
+      message: 'pong',
     };
   }
 
@@ -24,7 +24,7 @@ export class PingService {
 
   pingCatchWithSentry = async () => {
     try {
-      throw Error("ping error message");
+      throw Error('ping error message');
     } catch (e) {
       // const exceptionContextdata = {
       //   tags: {},
@@ -47,7 +47,7 @@ export class PingService {
     // Logger.log(req.user);
 
     return {
-      message: "authenticated pong",
+      message: 'authenticated pong',
     };
   };
 
@@ -55,7 +55,7 @@ export class PingService {
     // Logger.log(req.user);
 
     return {
-      message: "authenticated pong",
+      message: 'authenticated pong',
     };
   };
 }

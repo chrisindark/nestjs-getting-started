@@ -1,15 +1,14 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import * as Sentry from "@sentry/node";
-import "@sentry/tracing";
-import { Span, SpanContext, Transaction } from "@sentry/types";
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import * as Sentry from '@sentry/node';
+import '@sentry/tracing';
+import { Span, SpanContext, Transaction } from '@sentry/types';
+
 import {
   DEVELOPMENT_KEY,
   PRODUCTION_KEY,
   STAGING_KEY,
-} from "src/constants/constants";
-
-// import { SENTRY_DSN } from 'src/utils/constants';
+} from 'src/constants/constants';
 
 @Injectable()
 export class SentryService {
@@ -21,43 +20,28 @@ export class SentryService {
 
   _init() {
     const SENTRY_OPTIONS = {
-      dsn: this.configService.get("SENTRY_DSN"),
+      dsn: this.configService.get('SENTRY_DSN'),
       sampleRate:
         process.env.NODE_ENV === PRODUCTION_KEY
-          ? Number(this.configService.get("SENTRY_SAMPLE_RATE")) || 1
+          ? Number(this.configService.get('SENTRY_SAMPLE_RATE')) || 0.1
           : 0.0,
       // We recommend adjusting this value in production, or using tracesSampler
       // for finer control
       tracesSampleRate:
         process.env.NODE_ENV === PRODUCTION_KEY
-          ? Number(this.configService.get("SENTRY_TRACES_SAMPLE_RATE")) || 0.1
+          ? Number(this.configService.get('SENTRY_TRACES_SAMPLE_RATE')) || 0.1
           : 0.0,
       debug:
         process.env.NODE_ENV === PRODUCTION_KEY
           ? false
           : process.env.NODE_ENV === STAGING_KEY
-          ? false
-          : true,
+            ? false
+            : true,
       environment: process.env.NODE_ENV
         ? `${process.env.NODE_ENV}`
         : DEVELOPMENT_KEY,
       enabled: true,
       attachStacktrace: true,
-      integrations: [
-        // enable HTTP calls tracing
-        // new Sentry.Integrations.Http({ tracing: true }),
-      ],
-      // tracesSampler: samplingContext => {
-      //   // Examine provided context data (including parent decision, if any) along
-      //   // with anything in the global namespace to compute the sample rate or
-      //   // sampling decision for this transaction
-      //   if (samplingContext) {
-      //     return 0.0
-      //   } else if (samplingContext) {
-      //     return 0.0
-      //   }
-      //   return 0.0;
-      // }
     };
     // initialization of Sentry, this is where Sentry will create a Hub
     Sentry.init(SENTRY_OPTIONS);
@@ -76,7 +60,7 @@ export class SentryService {
     Sentry.getCurrentHub().configureScope((scope) => {
       scope.setSpan(transaction);
       // customize your context here
-      scope.setContext("http", contextData);
+      scope.setContext('http', contextData);
     });
   }
 
@@ -109,11 +93,7 @@ export class SentryService {
     const scope = this.getScope();
     scope.setTags(context?.tags);
     scope.setExtras(context?.extras);
-    const response = Sentry.captureException(
-      err,
-      this.getSpan().getTraceContext(),
-    );
-    // this.logger.log(response);
+    const response = Sentry.captureException(err, scope);
     return response;
   }
 
@@ -123,7 +103,6 @@ export class SentryService {
    * @param spanContext
    */
   startChild(spanContext: SpanContext) {
-    // this.logger.log("startChild");
     const span = this.getSpan();
     return span && span.startChild(spanContext);
   }
@@ -138,7 +117,7 @@ export class SentryService {
   ) {
     const transactionData = {
       name: `CatchWithSentry`,
-      op: "exception",
+      op: 'exception',
     };
     const transaction = this.startTransaction(transactionData);
     this.startSpan(transaction, contextData);

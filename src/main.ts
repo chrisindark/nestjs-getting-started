@@ -1,18 +1,18 @@
 // import { MicroserviceOptions, Transport } from "@nestjs/microservices";
-import { NestFactory } from "@nestjs/core";
-import { Logger, ValidationPipe, VersioningType } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import fastifyCookie from "@fastify/cookie";
+import { NestFactory } from '@nestjs/core';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+// import fastifyCookie from '@fastify/cookie';
 import {
-  FastifyAdapter,
+  // FastifyAdapter,
   NestFastifyApplication,
-} from "@nestjs/platform-fastify";
-import multipart from "fastify-multipart";
+} from '@nestjs/platform-fastify';
+// import multipart from '@fastify/multipart';
 // import { WsAdapter } from '@nestjs/platform-ws';
 
-import { AppModule } from "./app/app.module";
-import { AllExceptionsFilter } from "./exceptions/all-exceptions-filter";
-import { PRODUCTION_KEY, STAGING_KEY } from "./constants/constants";
+import { AppModule } from './modules/app/app.module';
+import { AllExceptionsFilter } from './exceptions/all-exceptions-filter';
+// import { PRODUCTION_KEY, STAGING_KEY } from './constants/constants';
 
 async function bootstrap() {
   try {
@@ -55,14 +55,14 @@ async function bootstrap() {
     //   type: VersioningType.URI,
     //   defaultVersion: ['1'],
     // });
-    app.enableShutdownHooks(["SIGINT", "SIGTERM"]);
+    app.enableShutdownHooks(['SIGINT', 'SIGTERM']);
 
     // app.useWebSocketAdapter(new WsAdapter(app));
 
-    const serverPort = app.get(ConfigService).get("APP_PORT") || 3000;
+    const serverPort = app.get(ConfigService).get('APP_PORT') || 3000;
     const serverAddress =
-      app.get(ConfigService).get("APP_ADDRESS") || "0.0.0.0";
-    Logger.log(serverPort, "Listening on port");
+      app.get(ConfigService).get('APP_ADDRESS') || '0.0.0.0';
+    Logger.log(serverPort, 'Listening on port');
     // const brokers = app.get(ConfigService).get("kafka.brokers").split(",");
 
     // This object acts as a kafka consumer

@@ -6,14 +6,14 @@ import {
   HttpStatus,
   Post,
   Body,
-} from "@nestjs/common";
-import { Request, Response } from "express";
+} from '@nestjs/common';
+import { Request, Response } from 'express';
 
-import { CreateCatDto } from "./dto/create-cat.dto";
-import { CatsService } from "./cats.service";
-import { Cat } from "./interfaces/cat.interface";
+import { CreateCatDto } from './dto/create-cat.dto';
+import { CatsService } from './cats.service';
+import { Cat } from './interfaces/cat.interface';
 
-@Controller("cats")
+@Controller('cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 

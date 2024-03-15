@@ -1,8 +1,8 @@
-import * as http from "https";
-import * as fs from "fs";
-import * as path from "path";
-import * as apm from "elastic-apm-node";
-import { v4 as uuidv4 } from "uuid";
+import * as http from 'https';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as apm from 'elastic-apm-node';
+import { v4 as uuidv4 } from 'uuid';
 
 class Utils {
   static catchWithApm(error, options, context = null) {
@@ -18,7 +18,7 @@ class Utils {
   static getInQueryString(length: number): string {
     let str = ``;
     for (let i = 1; i <= length; i++) {
-      str += i !== length ? " ?, " : " ? ";
+      str += i !== length ? ' ?, ' : ' ? ';
     }
     return `(${str})`;
   }
@@ -26,7 +26,7 @@ class Utils {
   static getInsertQueryString(length): string {
     let str = ``;
     for (let i = 1; i <= length; i++) {
-      str += i !== length ? " ?, " : " ? ";
+      str += i !== length ? ' ?, ' : ' ? ';
     }
     return `${str}`;
   }
@@ -79,7 +79,7 @@ class Utils {
   };
 
   static parseFromDate(dateString: string) {
-    const [date] = dateString.split(" ");
+    const [date] = dateString.split(' ');
 
     if (!date) {
       throw new Error(`Invalid date ${dateString}`);
@@ -89,7 +89,7 @@ class Utils {
   }
 
   static parseToDate(dateString: string) {
-    const [date] = dateString.split(" ");
+    const [date] = dateString.split(' ');
 
     if (!date) {
       throw new Error(`Invalid date ${dateString}`);
@@ -99,8 +99,8 @@ class Utils {
   }
 
   static getFileExtension(filename: string): string {
-    const filenameParts = filename.split(".");
-    let extension = "";
+    const filenameParts = filename.split('.');
+    let extension = '';
 
     if (filenameParts.length > 1) {
       extension = filenameParts[filenameParts.length - 1];
@@ -110,7 +110,7 @@ class Utils {
   }
 
   static async downloadFileFromUrl(url: string): Promise<string> {
-    const dest = path.join(__dirname, "../../media/", uuidv4());
+    const dest = path.join(__dirname, '../../media/', uuidv4());
     const file = fs.createWriteStream(dest);
 
     await new Promise<void>((resolve, reject) => {
@@ -118,12 +118,12 @@ class Utils {
         .get(url, (response) => {
           response.pipe(file);
 
-          file.on("finish", () => {
+          file.on('finish', () => {
             file.close();
             return resolve();
           });
         })
-        .on("error", (err) => {
+        .on('error', (err) => {
           fs.unlink(dest, () => reject(err));
         });
     });

@@ -1,9 +1,9 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { ClientsModule, Transport } from "@nestjs/microservices";
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
-import { KafkaMicroserviceController } from "./kafka-microservice.controller";
-import { KafkaMicroserviceService } from "./kafka-microservice.service";
+import { KafkaMicroserviceController } from './kafka-microservice.controller';
+import { KafkaMicroserviceService } from './kafka-microservice.service';
 
 // This module acts as a kafka producer
 @Module({

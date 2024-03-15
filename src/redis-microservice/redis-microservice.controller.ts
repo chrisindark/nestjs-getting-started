@@ -1,15 +1,15 @@
-import { Controller, Get, Inject, Logger } from "@nestjs/common";
+import { Controller, Get, Inject, Logger } from '@nestjs/common';
 import {
   ClientRedis,
   EventPattern,
   MessagePattern,
-} from "@nestjs/microservices";
-import { timeout } from "rxjs";
+} from '@nestjs/microservices';
+import { timeout } from 'rxjs';
 
-@Controller("api/v1/redisMicroservice")
+@Controller('api/v1/redisMicroservice')
 export class RedisMicroserviceController {
   constructor(
-    @Inject("REDIS_SERVICE")
+    @Inject('REDIS_SERVICE')
     private clientRedis: ClientRedis,
   ) {}
 
@@ -18,15 +18,15 @@ export class RedisMicroserviceController {
     return (data || []).reduce((a, b) => a + b);
   }
 
-  @EventPattern("firstRedisTopic")
+  @EventPattern('firstRedisTopic')
   async handleUserCreated(data: Record<string, unknown>) {
     // business logic
-    console.log(JSON.stringify(data) + " created in redis");
+    console.log(JSON.stringify(data) + ' created in redis');
   }
 
-  @Get("/publish")
+  @Get('/publish')
   async publish(): Promise<any> {
-    const res = await this.publishMessage("firstRedisTopic", {
+    const res = await this.publishMessage('firstRedisTopic', {
       value: '{"hello":"world"}',
     });
     return res;
@@ -39,7 +39,7 @@ export class RedisMicroserviceController {
       // console.log(res);
       return res;
     } catch (e) {
-      Logger.error(e, "", "REDISMICROSERVICE");
+      Logger.error(e, '', 'REDISMICROSERVICE');
       // let options = {
       //   custom: {
       //     event: "ERROR",

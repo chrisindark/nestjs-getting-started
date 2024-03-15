@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { Cron } from "@nestjs/schedule";
+import { Injectable } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 
-import { QueueService } from "src/queue/queue.service";
+import { QueueService } from 'src/queue/queue.service';
 
 @Injectable()
 export class CronService {
@@ -11,8 +11,8 @@ export class CronService {
     return { success: true };
   }
 
-  @Cron("0 * * * * *", {
-    name: "getFromCronQueue",
+  @Cron('0 * * * * *', {
+    name: 'getFromCronQueue',
   })
   getFromCronQueueOne() {
     this.getFromCronQueue();
@@ -27,8 +27,8 @@ export class CronService {
     // }
   }
 
-  @Cron("0 * * * * *", {
-    name: "getFromKafkaQueue",
+  @Cron('0 * * * * *', {
+    name: 'getFromKafkaQueue',
   })
   getFromKafkaQueueOne() {
     this.getFromKafkaQueue();
