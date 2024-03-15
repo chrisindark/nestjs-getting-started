@@ -1,10 +1,10 @@
 import { Injectable, Logger, OnApplicationShutdown } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
-  logLevel,
   RecordMetadata,
+  logLevel,
 } from '@nestjs/microservices/external/kafka.interface';
-import { Producer, Kafka, Consumer, Admin } from 'kafkajs';
+import { Admin, Consumer, Kafka, Producer } from 'kafkajs';
 
 import Utils from 'src/utils';
 

@@ -1,19 +1,19 @@
 import {
+  Inject,
   Injectable,
   Logger,
-  OnModuleInit,
-  Inject,
   OnApplicationShutdown,
   OnModuleDestroy,
+  OnModuleInit,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   ClientRedis,
   Ctx,
   EventPattern,
-  RedisContext,
   MessagePattern,
   Payload,
+  RedisContext,
 } from '@nestjs/microservices';
 import {} from '@nestjs/microservices/external/redis.interface';
 import Utils from 'src/utils';

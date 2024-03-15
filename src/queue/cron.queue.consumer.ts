@@ -1,12 +1,12 @@
 import {
   InjectQueue,
+  OnGlobalQueueActive,
+  OnGlobalQueueCompleted,
   OnGlobalQueueError,
   OnGlobalQueueFailed,
+  OnGlobalQueueWaiting,
   Process,
   Processor,
-  OnGlobalQueueWaiting,
-  OnGlobalQueueCompleted,
-  OnGlobalQueueActive,
 } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';

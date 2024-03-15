@@ -1,10 +1,10 @@
 import {
+  Inject,
   Injectable,
   Logger,
-  OnModuleInit,
-  Inject,
   OnApplicationShutdown,
   OnModuleDestroy,
+  OnModuleInit,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
