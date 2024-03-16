@@ -73,4 +73,27 @@ export class GCloudPubSubService {
       return null;
     }
   };
+
+  async publishMessageToTestTopic() {
+    const topicName = this.configService.get('GCLOUD_PUBSUB_TEST_TOPIC');
+    const gcloudTestPayload = {
+      type: 'hello',
+      message: 'world',
+    };
+    const messageId = await this.publishMessage(topicName, gcloudTestPayload);
+
+    return {
+      message: messageId,
+      success: true,
+    };
+  }
+
+  async publishMessageTopic(topic, payload) {
+    const messageId = await this.publishMessage(topic, payload);
+
+    return {
+      message: messageId,
+      success: true,
+    };
+  }
 }

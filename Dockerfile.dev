@@ -11,8 +11,8 @@ RUN yarn install
 
 # ARG NODE_ENV=$NODE_ENV
 
-# ENV MYSQL_JCLIVE_DB_HOST=host.docker.internal
-# ENV REDIS_VOICE_TOOLS_HOST=host.docker.internal
+# ENV MYSQL_DB_HOST=host.docker.internal
+# ENV REDIS_HOST=host.docker.internal
 
 COPY . .
 

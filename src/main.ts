@@ -1,6 +1,6 @@
 // import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import { NestFactory } from '@nestjs/core';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 // import fastifyCookie from '@fastify/cookie';
 import {
@@ -11,10 +11,12 @@ import {
 // import { WsAdapter } from '@nestjs/platform-ws';
 
 import { AppModule } from './modules/app/app.module';
-import { AllExceptionsFilter } from './exceptions/all-exceptions-filter';
+import { AllExceptionsFilter } from './exceptions/all-exceptions.filter';
 // import { PRODUCTION_KEY, STAGING_KEY } from './constants/constants';
 
 async function bootstrap() {
+  Logger.debug(`NODE_ENV - ${process.env.NODE_ENV}`);
+
   try {
     // const fastifyAdapter = new FastifyAdapter({
     //   logger:
@@ -51,10 +53,10 @@ async function bootstrap() {
       // preflightContinue: true,
       // optionsSuccessStatus: 200,
     });
-    // app.enableVersioning({
-    //   type: VersioningType.URI,
-    //   defaultVersion: ['1'],
-    // });
+    app.enableVersioning({
+      type: VersioningType.URI,
+      defaultVersion: ['1'],
+    });
     app.enableShutdownHooks(['SIGINT', 'SIGTERM']);
 
     // app.useWebSocketAdapter(new WsAdapter(app));

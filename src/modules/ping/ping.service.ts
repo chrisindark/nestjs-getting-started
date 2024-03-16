@@ -1,8 +1,8 @@
 import {
   BadRequestException,
   Injectable,
-  InternalServerErrorException,
-  Logger,
+  // InternalServerErrorException,
+  // Logger,
 } from '@nestjs/common';
 
 import { SentryService } from 'src/interceptors/sentry/sentry.service';

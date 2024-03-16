@@ -6,6 +6,7 @@ import { PingModule } from 'src/modules/ping/ping.module';
 import configuration from '../../config/configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UtilsModule } from '../../utils/utils.module';
 
 // import { KafkaMicroserviceModule } from "src/kafka-microservice/kafka-microservice.module";
 // import { KafkaConsumerModule } from "src/kafka-consumer/kafka-consumer.module";
@@ -21,12 +22,14 @@ import { AppService } from './app.service';
     ConfigModule.forRoot({
       envFilePath:
         process.env.NODE_ENV === 'production'
-          ? '.production.env'
+          ? '.env.production'
           : process.env.NODE_ENV === 'staging'
-            ? '.staging.env'
-            : '.development.env',
+            ? '.env.staging'
+            : '.env.development',
       load: [configuration],
     }),
+    PingModule,
+    UtilsModule,
     // KafkaMicroserviceModule,
     // KafkaConsumerModule,
     // RedisMicroserviceModule,
@@ -34,7 +37,6 @@ import { AppService } from './app.service';
     // CronModule,
     // MyLibraryModule,
     // MyOtherLibraryModule,
-    PingModule,
     WebsocketAppModule,
   ],
   providers: [AppService],
