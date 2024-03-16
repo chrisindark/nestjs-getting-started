@@ -34,7 +34,7 @@ export class EmailService {
       data,
     };
     const response = await this.gCloudPubSubService.publishMessageTopic(
-      this.configService.getOrThrow('GCLOUD_PUBSUB_JUSTCALL_EMAILS_TOPIC'),
+      this.configService.getOrThrow('GCLOUD_PUBSUB_EMAILS_TOPIC'),
       payload,
     );
 
