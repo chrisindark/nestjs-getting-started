@@ -4,7 +4,7 @@ import { Storage } from '@google-cloud/storage';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'teeny-request';
 
-export const GCLOUD_STORAGE_REPORTS_FOLDER_NAME = 'voice-reports';
+export const GCLOUD_STORAGE_REPORTS_FOLDER_NAME = 'reports';
 export const GCLOUD_STORAGE_BASE_URL = 'https://storage.googleapis.com';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class GCloudStorageService {
     this.connect();
 
     this.gcsBucket = this.configService.get(
-      'GCLOUD_STORAGE_JUSTCALL_REPORTS_BUCKET_NAME',
+      'GCLOUD_STORAGE_REPORTS_BUCKET_NAME',
     );
   }
 
@@ -37,7 +37,7 @@ export class GCloudStorageService {
   uploadFile = async (localFilePath: any, cloudFilePath?: string) => {
     try {
       if (!cloudFilePath) {
-        cloudFilePath = `${GCLOUD_STORAGE_REPORTS_FOLDER_NAME}/voice-tools_${new Date().getTime()}`;
+        cloudFilePath = `${GCLOUD_STORAGE_REPORTS_FOLDER_NAME}/${new Date().getTime()}`;
       }
       // cloudFilePath = cloudFilePath.concat(extname(localFilePath));
 
