@@ -7,6 +7,8 @@ import configuration from '../../config/configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UtilsModule } from '../../utils/utils.module';
+import { EmployeeModule } from '../employee/employee.module';
+import { CassandraModule } from '../../utils/cassandra/cassandra.module';
 
 // import { KafkaMicroserviceModule } from "src/kafka-microservice/kafka-microservice.module";
 // import { KafkaConsumerModule } from "src/kafka-consumer/kafka-consumer.module";
@@ -38,6 +40,8 @@ import { UtilsModule } from '../../utils/utils.module';
     // MyLibraryModule,
     // MyOtherLibraryModule,
     WebsocketAppModule,
+    CassandraModule,
+    EmployeeModule,
   ],
   providers: [AppService],
   controllers: [AppController],
