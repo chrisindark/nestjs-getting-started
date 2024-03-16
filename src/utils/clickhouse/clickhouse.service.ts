@@ -26,7 +26,7 @@ export class ClickhouseService implements OnApplicationShutdown {
         request_timeout: 30000,
         username: `${this.configService.get('CLICKHOUSE_DB_USERNAME')}`,
         password: `${this.configService.get('CLICKHOUSE_DB_PASSWORD')}`,
-        application: 'voice-tools-clickhouse-js',
+        application: 'clickhouse-js',
         database: `${this.configService.get('CLICKHOUSE_DB_DATABASE')}`,
         clickhouse_settings: {},
         max_open_connections: parseInt(
