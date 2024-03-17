@@ -68,51 +68,47 @@ export class EmployeeService {
       //   const { limit, firstName, lastName } = body;
 
       const firstName = 'Chris';
-      const lastName = '';
+      //   const lastName = 'Paul';
       const limit = 10;
       const queryParams = [];
       const whereParams = [];
-      let whereClause = ` WHERE `;
-      let limitClause = `  `;
+      let whereClause = `WHERE`;
+      let limitClause = ``;
 
       //   console.log(limit, firstName, lastName);
 
       if (firstName?.length) {
         // whereClause += ` AND first_name = ? `;
-        whereParams.push(` first_name = ? `);
+        whereParams.push(`first_name = ?`);
         queryParams.push(firstName);
       }
 
-      if (lastName?.length) {
-        // whereClause += ` AND last_name = ? `;
-        whereParams.push(` last_name = ? `);
-        queryParams.push(lastName);
-      }
+      //   if (lastName?.length) {
+      //     // whereClause += ` AND last_name = ? `;
+      //     whereParams.push(`last_name = ?`);
+      //     queryParams.push(lastName);
+      //   }
 
       if (limit) {
-        limitClause += ` LIMIT ? `;
-        // queryParams.push(String(limit));
+        limitClause += `LIMIT ${limit}`;
       }
 
       whereClause = whereParams.length
-        ? ` WHERE ${whereParams.join('AND')} `
+        ? ` WHERE ${whereParams.join(` AND `)} `
         : ``;
 
-      console.log(whereClause);
-      console.log(limitClause);
       const query = `
       SELECT id, first_name, last_name, created_at, updated_at FROM employee
       ${whereClause}
-      LIMIT 10
+      ${limitClause}
       `;
-      console.log(query);
-      console.log(queryParams);
+      //   console.log(query);
+      //   console.log(queryParams);
       const result = await this.employeeRepository
         .getClient()
         .execute(query, queryParams);
-      console.log(result);
       const response = result.rows;
-      console.log(response);
+
       return {
         success: true,
         status: ServiceResponseStatus.SUCCESS,
