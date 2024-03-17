@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { WebsocketAppModule } from 'src/apps/websocketApp/websocketApp.module';
-import { PingModule } from 'src/modules/ping/ping.module';
 
 import configuration from '../../config/configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { PingModule } from '../../modules/ping/ping.module';
 import { UtilsModule } from '../../utils/utils.module';
-import { EmployeeModule } from '../employee/employee.module';
-import { CassandraModule } from '../../utils/cassandra/cassandra.module';
+// import { WebsocketAppModule } from '../../apps/websocketApp/websocketApp.module';
+// import { CassandraModule } from '../../utils/cassandra/cassandra.module';
+// import { EmployeeModule } from '../employee/employee.module';
+import { MongoModule } from '../../utils/mongo/mongo.module';
+import { CatsModule } from '../../cats/cats.module';
 
 // import { KafkaMicroserviceModule } from "src/kafka-microservice/kafka-microservice.module";
 // import { KafkaConsumerModule } from "src/kafka-consumer/kafka-consumer.module";
@@ -39,9 +41,11 @@ import { CassandraModule } from '../../utils/cassandra/cassandra.module';
     // CronModule,
     // MyLibraryModule,
     // MyOtherLibraryModule,
-    WebsocketAppModule,
-    CassandraModule,
-    EmployeeModule,
+    // WebsocketAppModule,
+    // CassandraModule,
+    // EmployeeModule,
+    MongoModule,
+    CatsModule,
   ],
   providers: [AppService],
   controllers: [AppController],

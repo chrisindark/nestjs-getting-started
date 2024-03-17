@@ -1,16 +1,16 @@
 import {
   Controller,
   Get,
-  Logger,
+  // Logger,
   Param,
-  Post,
+  // Post,
   Req,
-  UseGuards,
+  // UseGuards,
 } from '@nestjs/common';
 
 import { PingService } from 'src/modules/ping/ping.service';
-import { CookieAuthGuard } from '../auth/cookie-auth.guard';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+// import { CookieAuthGuard } from '../auth/cookie-auth.guard';
+// import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('ping')
 export class PingController {
@@ -31,13 +31,13 @@ export class PingController {
     return this.pingService.pingCatchWithSentry();
   }
 
-  @UseGuards(CookieAuthGuard)
+  // @UseGuards(CookieAuthGuard)
   @Get('/ping-authenticated')
   pingAuthenticated(@Req() req): any {
     return this.pingService.pingAuthenticated(req);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get('/ping-jwt-authenticated')
   pingJwtAuthenticated(@Req() req): any {
     return this.pingService.pingJwtAuthenticated(req);

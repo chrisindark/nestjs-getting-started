@@ -39,7 +39,7 @@ async function bootstrap() {
     // app.register(multipart, {});
 
     app.useGlobalFilters(new AllExceptionsFilter());
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(new ValidationPipe({ transform: true }));
     app.enableCors({
       // origin:
       //   app.get(ConfigService).get("CORS_ORIGIN_WHITELIST").split(",") || [],

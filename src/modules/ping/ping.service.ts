@@ -5,11 +5,11 @@ import {
   // Logger,
 } from '@nestjs/common';
 
-import { SentryService } from 'src/interceptors/sentry/sentry.service';
+// import { SentryService } from 'src/interceptors/sentry/sentry.service';
 
 @Injectable()
 export class PingService {
-  constructor(private readonly sentryService: SentryService) {}
+  constructor() {}
   async ping() {
     return {
       message: 'pong',

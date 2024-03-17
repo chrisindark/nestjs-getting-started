@@ -9,21 +9,19 @@ import { PRODUCTION_KEY } from 'src/constants/constants';
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      name: 'justcallMongo',
+      name: 'testMongo',
       useFactory: (configService: ConfigService) => {
         if (process.env.NODE_ENV === PRODUCTION_KEY) {
           return {
             type: 'mongodb',
-            name: 'justcallMongo',
+            name: 'test',
             // useNewUrlParser: true,
-            host: configService.get('MONGO_CALLS_DB_HOST'),
-            port: parseInt(configService.get('MONGO_CALLS_DB_PORT'), 10),
-            username: configService.get('MONGO_CALLS_DB_USERNAME'),
-            password: configService.get('MONGO_CALLS_DB_PASSWORD'),
-            authSource: configService.get(
-              'MONGO_CALLS_DB_DATABASE_AUTH_SOURCE',
-            ),
-            database: configService.get('MONGO_CALLS_DB_DATABASE'),
+            host: configService.get('MONGO_DB_HOST'),
+            port: parseInt(configService.get('MONGO_DB_PORT'), 10),
+            username: configService.get('MONGO_DB_USERNAME'),
+            password: configService.get('MONGO_DB_PASSWORD'),
+            authSource: configService.get('MONGO_DB_DATABASE_AUTH_SOURCE'),
+            database: configService.get('MONGO_DB_DATABASE'),
             entities: [],
             autoLoadEntities: true,
             useUnifiedTopology: true,
@@ -31,7 +29,7 @@ import { PRODUCTION_KEY } from 'src/constants/constants';
             extra: {
               connectionLimit: 4,
             },
-            logging: false,
+            logging: true,
             synchronize: false,
             multipleStatements: true,
             keepConnectionAlive: true,
@@ -39,18 +37,18 @@ import { PRODUCTION_KEY } from 'src/constants/constants';
         } else {
           return {
             type: 'mongodb',
-            name: 'justcallMongo',
+            name: 'testMongo',
             // useNewUrlParser: true,
-            url: configService.get('MONGO_CALLS_DB_URL'),
+            url: configService.get('MONGO_DB_URL'),
             entities: [],
             autoLoadEntities: true,
             useUnifiedTopology: true,
-            database: configService.get('MONGO_CALLS_DB_DATABASE'),
+            database: configService.get('MONGO_DB_DATABASE'),
             connectionLimit: 2,
             extra: {
               connectionLimit: 2,
             },
-            logging: false,
+            logging: true,
             synchronize: false,
             multipleStatements: true,
             keepConnectionAlive: true,

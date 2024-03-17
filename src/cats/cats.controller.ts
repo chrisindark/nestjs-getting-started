@@ -3,41 +3,61 @@ import {
   Controller,
   Get,
   HttpStatus,
+  Param,
   Post,
+  Query,
   Req,
   Res,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
-import { CreateCatDto } from './dto/create-cat.dto';
+import {
+  CreateCatBody,
+  // FilterCatBody,
+  GetCatParam,
+  GetCatsQuery,
+} from './cats.interface';
 import { CatsService } from './cats.service';
-import { Cat } from './interfaces/cat.interface';
+import { UpdateCatDto } from './dto/update-cat.dto';
 
 @Controller('cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
-  @Get()
-  async findAll(): Promise<Cat[]> {
-    return this.catsService.findAll();
+  // curl --location 'localhost:3000/v1/cats?limit=1&offset=1'
+  @Get('/')
+  async getCats(@Query() query: GetCatsQuery) {
+    return this.catsService.getCats(query);
   }
 
-  // @Get()
-  // findAll(@Req() request: Request, @Res() res: Response) {
-  //   const apiRes = {
-  //     success: true,
-  //     cats: []
-  //   };
-  //   return res.status(HttpStatus.OK).json(apiRes);
-  // }
-
-  @Post()
-  async create(@Body() createCatDto: CreateCatDto) {
-    this.catsService.create(createCatDto);
+  // curl --location 'localhost:3000/v1/cats/create' \
+  // --header 'Content-Type: application/json' \
+  // --data '{
+  //     "name": "Chris",
+  //     "age": 5,
+  //     "breed": "Leo"
+  // }'
+  @Post('/create')
+  async createCat(@Body() body: CreateCatBody) {
+    return this.catsService.createCat(body);
   }
 
-  // @Post()
-  // async create(@Res() res: Response) {
-  //   res.status(HttpStatus.CREATED).json();
-  // }
+  // curl --location 'localhost:3000/v1/cats/65f6fddfac699abfdce2b193'
+  @Get('/:_id')
+  async getCatById(@Param() params: GetCatParam) {
+    return this.catsService.filterCatById(params);
+  }
+
+  @Post('/update/:_id')
+  async updateCat(
+    @Req() req: Request,
+    @Param() params: GetCatParam,
+    @Body() body: UpdateCatDto,
+    @Res() res: Response,
+  ) {
+    console.log(req.headers);
+    console.log(params);
+    console.log(body);
+    return res.status(HttpStatus.OK).json();
+  }
 }

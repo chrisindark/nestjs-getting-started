@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+// import { ConfigService } from '@nestjs/config';
 import * as moment from 'moment';
 import * as fs from 'fs';
 import { promisify } from 'util';
@@ -14,7 +14,7 @@ import {
 export class UtilsService {
   private readonly logger = new Logger(UtilsService.name);
 
-  constructor(private readonly configService: ConfigService) {}
+  constructor() {}
 
   convertToTimezoneDate = (date: Date, timezoneString: string) => {
     const convertedDateStr = new Date(date).toLocaleString('en-US', {
