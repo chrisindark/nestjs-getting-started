@@ -49,12 +49,19 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     const exceptionResponse = exception.response ? exception.response : {};
 
-    response.status(status).send({
+    response.status(status).json({
       statusCode: status,
       message,
       response: exceptionResponse,
       path: request.url,
       success: false,
     });
+    // response.status(status).send({
+    //   statusCode: status,
+    //   message,
+    //   response: exceptionResponse,
+    //   path: request.url,
+    //   success: false,
+    // });
   }
 }

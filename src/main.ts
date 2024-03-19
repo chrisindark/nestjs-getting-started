@@ -41,14 +41,14 @@ async function bootstrap() {
     app.useGlobalFilters(new AllExceptionsFilter());
     app.useGlobalPipes(new ValidationPipe({ transform: true }));
     app.enableCors({
-      // origin:
-      //   app.get(ConfigService).get("CORS_ORIGIN_WHITELIST").split(",") || [],
-      // methods:
-      //   app.get(ConfigService).get("CORS_ALLOW_METHODS").split(",") || [],
+      origin:
+        app.get(ConfigService).get('CORS_ORIGIN_WHITELIST').split(',') || [],
+      methods:
+        app.get(ConfigService).get('CORS_ALLOW_METHODS').split(',') || [],
       // allowedHeaders:
       //   app.get(ConfigService).get('CORS_ALLOW_HEADERS').split(',') || [],
       // exposedHeaders: [],
-      // credentials: true,
+      credentials: true,
       // maxAge: 0,
       // preflightContinue: true,
       // optionsSuccessStatus: 200,
