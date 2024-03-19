@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsNotEmpty,
   IsNumber,
@@ -6,9 +7,26 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { Transform } from 'class-transformer';
 
-export class GetCatsQuery {
+export class CreatePersonBody {
+  @IsNotEmpty()
+  @IsString()
+  firstName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  lastName: string;
+
+  @IsOptional()
+  @IsString()
+  address: string;
+
+  @IsOptional()
+  @IsString()
+  city: string;
+}
+
+export class GetPersonQuery {
   @Transform(({ value }) => Number(value), { toClassOnly: true })
   @IsNumber({}, { each: true })
   @Min(0)
@@ -21,66 +39,49 @@ export class GetCatsQuery {
   offset: number;
 }
 
-export class CreateCatBody {
-  @IsNotEmpty()
-  @IsString()
-  name: string;
-
-  @IsNotEmpty()
-  @IsNumber()
-  age: number;
-
-  @IsNotEmpty()
-  @IsString()
-  breed: string;
-}
-
-export class GetCatParam {
-  @IsNotEmpty()
-  @IsString()
-  _id: string;
-}
-
-export class FilterCatBody {
-  @IsNumber({}, { each: true })
-  @Min(0)
-  @Max(500)
-  limit: number;
-
+export class GetPersonParam {
   @Transform(({ value }) => Number(value), { toClassOnly: true })
-  @IsNumber({}, { each: true })
-  @Min(0)
-  offset: number;
-
-  @IsOptional()
-  @IsNotEmpty()
-  @IsString()
-  name: string;
-
-  @IsOptional()
-  @IsNotEmpty()
   @IsNumber()
-  age: number;
-
-  @IsOptional()
-  @IsNotEmpty()
-  @IsString()
-  breed: string;
+  id: number;
 }
 
-export class UpdateCatBody {
-  @IsOptional()
-  @IsNotEmpty()
-  @IsString()
-  name: string;
+export class FilterPersonBody {
+  @IsNumber({}, { each: true })
+  @Min(10)
+  @Max(500)
+  limit: number = 10;
+
+  @IsNumber({}, { each: true })
+  @Min(0)
+  offset: number = 0;
 
   @IsOptional()
   @IsNotEmpty()
-  @IsNumber()
-  age: number;
+  @IsString()
+  firstName: string;
 
   @IsOptional()
   @IsNotEmpty()
   @IsString()
-  breed: string;
+  lastName: string;
+}
+
+export class UpdatePersonBody {
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  firstName: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  lastName: string;
+
+  @IsOptional()
+  @IsString()
+  address: string;
+
+  @IsOptional()
+  @IsString()
+  city: string;
 }

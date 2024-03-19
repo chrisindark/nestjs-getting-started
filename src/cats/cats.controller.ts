@@ -16,9 +16,9 @@ import {
   // FilterCatBody,
   GetCatParam,
   GetCatsQuery,
+  UpdateCatBody,
 } from './cats.interface';
 import { CatsService } from './cats.service';
-import { UpdateCatDto } from './dto/update-cat.dto';
 
 @Controller('cats')
 export class CatsController {
@@ -52,7 +52,7 @@ export class CatsController {
   async updateCat(
     @Req() req: Request,
     @Param() params: GetCatParam,
-    @Body() body: UpdateCatDto,
+    @Body() body: UpdateCatBody,
     @Res() res: Response,
   ) {
     console.log(req.headers);

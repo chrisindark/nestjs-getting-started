@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { PingService } from 'src/modules/ping/ping.service';
-import { PingController } from 'src/modules/ping/ping.controller';
+import { PingService } from './ping.service';
+import { PingController } from './ping.controller';
 // import { AuthModule } from '../auth/auth.module';
 
 @Module({

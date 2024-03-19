@@ -9,6 +9,8 @@ import { AppService } from './app.service';
 import { PingModule } from '../../modules/ping/ping.module';
 import { UtilsModule } from '../../utils/utils.module';
 import { WebsocketAppModule } from '../../apps/websocketApp/websocketApp.module';
+import { MysqlModule } from '../../utils/mysql/mysql.module';
+import { PersonModule } from '../person/person.module';
 // import { CassandraModule } from '../../utils/cassandra/cassandra.module';
 // import { EmployeeModule } from '../employee/employee.module';
 // import { MongoModule } from '../../utils/mongo/mongo.module';
@@ -39,6 +41,8 @@ import { WebsocketAppModule } from '../../apps/websocketApp/websocketApp.module'
     }),
     PingModule,
     UtilsModule,
+    MysqlModule,
+    PersonModule,
     // KafkaMicroserviceModule,
     // KafkaConsumerModule,
     // RedisMicroserviceModule,

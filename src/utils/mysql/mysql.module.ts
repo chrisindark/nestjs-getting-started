@@ -1,4 +1,4 @@
-import { Global, Logger, Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
@@ -23,9 +23,11 @@ import { MysqlService } from './mysql.service';
           synchronize: false,
           multipleStatements: true,
           keepConnectionAlive: true,
-          connectionLimit: 2,
+          connectionLimit:
+            parseInt(configService.get('MYSQL_DB_MAX_CONNECTIONS'), 10) || 2,
           extra: {
-            connectionLimit: 2,
+            connectionLimit:
+              parseInt(configService.get('MYSQL_DB_MAX_CONNECTIONS'), 10) || 2,
           },
           entities: [],
           autoLoadEntities: true,
