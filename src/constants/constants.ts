@@ -41,3 +41,5 @@ export const MAX_SYNC_LIMIT = 10000;
 export const MAX_RETURN_LIMIT = 10000;
 export const THOUSAND_LIMIT = 1000;
 export const HUNDRED_LIMIT = 100;
+
+export const CUSTOM_TOKEN_HEADER_NAME = 'Authorization';

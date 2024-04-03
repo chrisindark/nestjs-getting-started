@@ -28,4 +28,15 @@ export class AuthService {
       accessToken: this.jwtService.sign(payload),
     };
   }
+
+  getUserByAuthorizationHeader = async (header: string) => {
+    return {};
+  };
+
+  getUserByCustomApiKeyAndApiSecret = async (
+    apiKey: string,
+    apiSecret: string,
+  ) => {
+    return {};
+  };
 }
