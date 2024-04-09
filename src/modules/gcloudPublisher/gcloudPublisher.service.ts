@@ -1,7 +1,7 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
-import { GCloudPubSubService } from "src/utils/gcloudPubSub/gcloudPubSub.service";
+import { GCloudPubSubService } from 'src/utils/gcloudPubSub/gcloudPubSub.service';
 
 @Injectable()
 export class GCloudPublisherService {
@@ -23,10 +23,10 @@ export class GCloudPublisherService {
   };
 
   async publishMessageToTestTopic() {
-    const topicName = this.configService.get("GCLOUD_PUBSUB_TEST_TOPIC");
+    const topicName = this.configService.get('GCLOUD_PUBSUB_TEST_TOPIC');
     const gcloudTestPayload = {
-      type: "hello",
-      message: "world",
+      type: 'hello',
+      message: 'world',
     };
 
     const messageId = await this.publishMessage(topicName, gcloudTestPayload);

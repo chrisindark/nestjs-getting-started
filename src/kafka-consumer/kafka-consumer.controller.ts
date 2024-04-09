@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Logger, OnModuleInit } from "@nestjs/common";
+import { Controller, Get, Inject, Logger, OnModuleInit } from '@nestjs/common';
 import {
   Client,
   ClientKafka,
@@ -10,17 +10,17 @@ import {
   MessagePattern,
   Payload,
   Transport,
-} from "@nestjs/microservices";
+} from '@nestjs/microservices';
 import {
   Consumer,
   Producer,
-} from "@nestjs/microservices/external/kafka.interface";
-import { Subscription, timeout } from "rxjs";
-import Utils from "src/utils";
+} from '@nestjs/microservices/external/kafka.interface';
+import { Subscription, timeout } from 'rxjs';
+import Utils from 'src/utils';
 
-import { KafkaConsumerService } from "./kafka-consumer.service";
+import { KafkaConsumerService } from './kafka-consumer.service';
 
-@Controller("api/v1/kafkaConsumer")
+@Controller('api/v1/kafkaConsumer')
 export class KafkaConsumerController implements OnModuleInit {
   constructor(
     // @Inject("KAFKA_CONSUMER_SERVICE")
@@ -75,7 +75,7 @@ export class KafkaConsumerController implements OnModuleInit {
       // console.log(res);
       // return res;
     } catch (e) {
-      Logger.error(e, "", "KAFKACONSUMER");
+      Logger.error(e, '', 'KAFKACONSUMER');
       // let options = {
       //   custom: {
       //     event: "ERROR",

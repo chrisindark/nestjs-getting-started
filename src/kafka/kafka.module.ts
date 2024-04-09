@@ -1,8 +1,8 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { KafkaService } from "./kafka.service";
-import { KafkaController } from "./kafka.controller";
+import { KafkaService } from './kafka.service';
+import { KafkaController } from './kafka.controller';
 
 @Module({
   imports: [ConfigModule],

@@ -1,0 +1,29 @@
+FROM node:18-alpine
+
+WORKDIR /usr/src/nestjs
+
+# Bundle APP files
+COPY ./package.json ./yarn.lock ./.yarnrc.yml ./
+COPY ./.yarn ./.yarn
+
+# Install app dependencies
+RUN yarn install
+
+# ARG NODE_ENV=$NODE_ENV
+
+# ENV MYSQL_DB_HOST=host.docker.internal
+# ENV REDIS_HOST=host.docker.internal
+
+COPY . .
+
+RUN yarn build
+
+ARG PORT=3000
+EXPOSE $PORT
+
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
+
+USER nonroot
+
+CMD [ "yarn", "start:dev" ]

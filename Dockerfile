@@ -1,21 +1,33 @@
-FROM node:14-alpine
+FROM node:18-alpine
 
-WORKDIR /usr/src/consumer
+WORKDIR /usr/src/nestjs
 
 # RUN npm i -g corepack yarn
+# Bundle APP files
+RUN npm install -g pm2 pnpm
 
-COPY ./package.json ./yarn.lock ./.yarnrc.yml ./
-COPY ./.yarn ./.yarn
+COPY ./package.json ./pnpm-lock.yaml ./
+# COPY ./package.json ./yarn.lock ./.yarnrc.yml ./
+# COPY ./.yarn ./.yarn
 
-RUN yarn install
+# Install app dependencies
+RUN pnpm install
+# RUN yarn install
 
 ARG NODE_ENV=$NODE_ENV
 ENV NODE_ENV $NODE_ENV
 
 COPY . .
 
-RUN yarn run build
+RUN pnpm build
+# RUN yarn build
 
-EXPOSE 4000
+ARG PORT=3000
+EXPOSE $PORT
+
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
+
+USER nonroot
 
 CMD ["yarn", "run", "start"]

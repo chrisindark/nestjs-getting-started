@@ -3,15 +3,15 @@ import {
   Module,
   NestModule,
   RequestMethod,
-} from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
+} from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
-import configuration from "../../config/configuration";
+import configuration from '../../config/configuration';
 
-import { PRODUCTION_KEY, STAGING_KEY } from "src/constants/constants";
-import { SentryModule } from "src/interceptors/sentry/sentry.module";
-import { LoggerMiddleware } from "src/middlewares/logger.middleware";
-import { EventsModule } from "./modules/events/events.module";
+import { PRODUCTION_KEY, STAGING_KEY } from 'src/constants/constants';
+import { SentryModule } from 'src/interceptors/sentry/sentry.module';
+import { LoggerMiddleware } from 'src/middlewares/logger.middleware';
+import { EventsModule } from './modules/events/events.module';
 // import { MessageModule } from './modules/message/message.module';
 
 @Module({
@@ -21,10 +21,10 @@ import { EventsModule } from "./modules/events/events.module";
       cache: true,
       envFilePath:
         process.env.NODE_ENV === PRODUCTION_KEY
-          ? ".env.production"
+          ? '.env.production'
           : process.env.NODE_ENV === STAGING_KEY
-          ? ".env.staging"
-          : ".env.local",
+            ? '.env.staging'
+            : '.env.local',
       load: [configuration],
     }),
     SentryModule,
@@ -35,7 +35,7 @@ import { EventsModule } from "./modules/events/events.module";
 export class WebsocketAppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer.apply(LoggerMiddleware).forRoutes({
-      path: "*",
+      path: '*',
       method: RequestMethod.ALL,
     });
   }

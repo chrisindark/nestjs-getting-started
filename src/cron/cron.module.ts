@@ -1,9 +1,9 @@
-import { Module, Global } from "@nestjs/common";
-import { ScheduleModule } from "@nestjs/schedule";
+import { Global, Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 
-import { CronController } from "./cron.controller";
-import { CronService } from "./cron.service";
-import { QueueModule } from "src/queue/queue.module";
+import { CronController } from './cron.controller';
+import { CronService } from './cron.service';
+import { QueueModule } from 'src/queue/queue.module';
 
 @Global()
 @Module({

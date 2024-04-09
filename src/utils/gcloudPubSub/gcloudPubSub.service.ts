@@ -1,6 +1,6 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { PubSub } from "@google-cloud/pubsub";
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { PubSub } from '@google-cloud/pubsub';
 
 @Injectable()
 export class GCloudPubSubService {
@@ -8,7 +8,7 @@ export class GCloudPubSubService {
   private readonly projectId;
 
   constructor(private readonly configService: ConfigService) {
-    this.projectId = this.configService.get("GCLOUD_PROJECT_ID");
+    this.projectId = this.configService.get('GCLOUD_PROJECT_ID');
     this.connect();
   }
 
@@ -31,7 +31,7 @@ export class GCloudPubSubService {
       // Logger.log(`Message ${messageId} published`, '');
       return messageId;
     } catch (e) {
-      Logger.error(e, "", "GCLOUDPUBSUB");
+      Logger.error(e, '', 'GCLOUDPUBSUB');
       return null;
     }
   };
@@ -59,18 +59,41 @@ export class GCloudPubSubService {
       const subscription = this.pubSubClient.subscription(subscriptionNameOrId);
 
       // Receive callbacks for new messages on the subscription
-      subscription.on("message", messageHandler);
+      subscription.on('message', messageHandler);
 
       // Receive callbacks for errors on the subscription
-      subscription.on("error", (e) => {
-        Logger.error(`Received error: ${e}`, "", "GCLOUDPUBSUB");
+      subscription.on('error', (e) => {
+        Logger.error(`Received error: ${e}`, '', 'GCLOUDPUBSUB');
       });
 
       return subscription;
       // }
     } catch (e) {
-      Logger.error(e, "", "GCLOUDPUBSUB");
+      Logger.error(e, '', 'GCLOUDPUBSUB');
       return null;
     }
   };
+
+  async publishMessageToTestTopic() {
+    const topicName = this.configService.get('GCLOUD_PUBSUB_TEST_TOPIC');
+    const gcloudTestPayload = {
+      type: 'hello',
+      message: 'world',
+    };
+    const messageId = await this.publishMessage(topicName, gcloudTestPayload);
+
+    return {
+      message: messageId,
+      success: true,
+    };
+  }
+
+  async publishMessageTopic(topic, payload) {
+    const messageId = await this.publishMessage(topic, payload);
+
+    return {
+      message: messageId,
+      success: true,
+    };
+  }
 }

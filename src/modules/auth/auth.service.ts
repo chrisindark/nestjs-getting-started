@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 // import { UsersService } from "../../users/users.service";
 
@@ -28,4 +28,15 @@ export class AuthService {
       accessToken: this.jwtService.sign(payload),
     };
   }
+
+  getUserByAuthorizationHeader = async (header: string) => {
+    return {};
+  };
+
+  getUserByCustomApiKeyAndApiSecret = async (
+    apiKey: string,
+    apiSecret: string,
+  ) => {
+    return {};
+  };
 }

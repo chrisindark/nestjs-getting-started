@@ -1,8 +1,8 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { promisify } from "util";
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { promisify } from 'util';
 
-import { GCloudPubSubService } from "src/utils/gcloudPubSub/gcloudPubSub.service";
+import { GCloudPubSubService } from 'src/utils/gcloudPubSub/gcloudPubSub.service';
 
 @Injectable()
 export class GCloudSubscriberService {
@@ -49,13 +49,13 @@ export class GCloudSubscriberService {
         }
       }
     } catch (e) {
-      Logger.error(e, "", "ERROR_MESSAGE_HANDLER");
+      Logger.error(e, '', 'ERROR_MESSAGE_HANDLER');
     }
   };
 
   async subscribeMessage() {
     const subscriptionName = this.configService.get(
-      "GCLOUD_PUBSUB_TEST_SUBSCRIPTION",
+      'GCLOUD_PUBSUB_TEST_SUBSCRIPTION',
     );
     // const topicName = this.configService.get('GCLOUD_PUBSUB_TEST_TOPIC');
     const subscription = this.gcloudPubSubService.listenForMessages(

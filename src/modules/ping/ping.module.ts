@@ -1,11 +1,11 @@
-import { Module } from "@nestjs/common";
+import { Module } from '@nestjs/common';
 
-import { PingService } from "src/modules/ping/ping.service";
-import { PingController } from "src/modules/ping/ping.controller";
-import { AuthModule } from "../auth/auth.module";
+import { PingService } from './ping.service';
+import { PingController } from './ping.controller';
+// import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [AuthModule],
+  imports: [],
   providers: [PingService],
   controllers: [PingController],
   exports: [PingService],

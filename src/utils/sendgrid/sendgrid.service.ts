@@ -1,7 +1,7 @@
-import { Global, Injectable, Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import * as SendGrid from "@sendgrid/mail";
-import { SentryService } from "src/interceptors/sentry/sentry.service";
+import { Global, Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import * as SendGrid from '@sendgrid/mail';
+import { SentryService } from 'src/interceptors/sentry/sentry.service';
 
 @Global()
 @Injectable()
@@ -10,7 +10,7 @@ export class SendgridService {
     private readonly configService: ConfigService,
     private readonly sentryService: SentryService,
   ) {
-    SendGrid.setApiKey(this.configService.get<string>("SEND_GRID_KEY"));
+    SendGrid.setApiKey(this.configService.get<string>('SEND_GRID_KEY'));
   }
 
   async send(mail: SendGrid.MailDataRequired) {

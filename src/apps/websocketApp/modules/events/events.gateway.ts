@@ -7,16 +7,16 @@ import {
   WebSocketGateway,
   WebSocketServer,
   WsResponse,
-} from "@nestjs/websockets";
-import { Server, Socket } from "socket.io";
-import { Observable, from } from "rxjs";
-import { map } from "rxjs/operators";
-import { Logger } from "@nestjs/common";
+} from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
+import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Logger } from '@nestjs/common';
 // import { UseGuards } from '@nestjs/common';
 
 @WebSocketGateway({
   cors: {
-    origin: "*",
+    origin: '*',
   },
 })
 export class EventsGateway
@@ -36,29 +36,29 @@ export class EventsGateway
   }
 
   afterInit(server: Server) {
-    this.logger.log("WebSocket server initialized");
+    this.logger.log('WebSocket server initialized');
   }
 
-  @SubscribeMessage("events")
+  @SubscribeMessage('events')
   findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
-    console.log("events: ", data);
+    console.log('events: ', data);
     return from([1, 2, 3]).pipe(
-      map((item) => ({ event: "events", data: item })),
+      map((item) => ({ event: 'events', data: item })),
     );
   }
 
-  @SubscribeMessage("identity")
+  @SubscribeMessage('identity')
   async identity(@MessageBody() data: number): Promise<number> {
-    console.log("identity: ", data);
+    console.log('identity: ', data);
     return data + 1;
   }
 
-  @SubscribeMessage("endpoint")
+  @SubscribeMessage('endpoint')
   async handleEndpoint(
     client: Socket,
     @MessageBody() data: any,
   ): Promise<WsResponse<{ app: string; success: boolean }>> {
-    console.log("endpoint: ", data);
-    return { event: "endpoint", data: { app: "server", success: true } };
+    console.log('endpoint: ', data);
+    return { event: 'endpoint', data: { app: 'server', success: true } };
   }
 }

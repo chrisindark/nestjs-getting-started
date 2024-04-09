@@ -1,12 +1,12 @@
-import { Injectable, Logger, OnApplicationShutdown } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { Injectable, Logger, OnApplicationShutdown } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import {
-  logLevel,
   RecordMetadata,
-} from "@nestjs/microservices/external/kafka.interface";
-import { Producer, Kafka, Consumer, Admin } from "kafkajs";
+  logLevel,
+} from '@nestjs/microservices/external/kafka.interface';
+import { Admin, Consumer, Kafka, Producer } from 'kafkajs';
 
-import Utils from "src/utils";
+import Utils from 'src/utils';
 
 @Injectable()
 export class KafkaService implements OnApplicationShutdown {
@@ -25,9 +25,9 @@ export class KafkaService implements OnApplicationShutdown {
 
   // this function is to connect to kafka client
   connect() {
-    const brokerStr = this.configService.get("kafka.brokers");
+    const brokerStr = this.configService.get('kafka.brokers');
     // brokers will give comma separated string, so we need to split with comma to get list of brokers
-    const brokers = brokerStr.split(",");
+    const brokers = brokerStr.split(',');
 
     try {
       this.client = new Kafka({
@@ -42,7 +42,7 @@ export class KafkaService implements OnApplicationShutdown {
         logLevel: logLevel.ERROR,
       });
     } catch (e) {
-      Logger.error(e, "", `KAFKA`);
+      Logger.error(e, '', `KAFKA`);
     }
   }
 
@@ -52,7 +52,7 @@ export class KafkaService implements OnApplicationShutdown {
       this.connect();
       // await this.connectProducer();
     } catch (e) {
-      Logger.error("Failed to connect", "", "KAFKA");
+      Logger.error('Failed to connect', '', 'KAFKA');
     }
   }
 
@@ -60,12 +60,12 @@ export class KafkaService implements OnApplicationShutdown {
   async adminConnect() {
     this.admin = this.client.admin();
     this.admin.connect();
-    console.log(await this.admin.fetchTopicOffsets("firstTopic"));
+    console.log(await this.admin.fetchTopicOffsets('firstTopic'));
   }
 
   // connects consumer
   async connectConsumer() {
-    this.consumer = this.client.consumer({ groupId: "posts-consumer" });
+    this.consumer = this.client.consumer({ groupId: 'posts-consumer' });
     this.getConsumer();
   }
 
@@ -75,7 +75,7 @@ export class KafkaService implements OnApplicationShutdown {
       await this.consumer.connect();
       return this.consumer;
     } catch (e) {
-      Logger.error(e, "", `KAFKA`);
+      Logger.error(e, '', `KAFKA`);
     }
   }
 
@@ -83,7 +83,7 @@ export class KafkaService implements OnApplicationShutdown {
   async consumeOffset(offset, partition) {
     console.log(offset, partition);
 
-    await this.consumer.subscribe({ topic: "firstTopic" });
+    await this.consumer.subscribe({ topic: 'firstTopic' });
 
     this.consumer.run({
       eachMessage: async ({ topic, message }) => {
@@ -93,9 +93,9 @@ export class KafkaService implements OnApplicationShutdown {
       },
     });
     this.consumer.seek({
-      topic: "firstTopic",
+      topic: 'firstTopic',
       partition: partition,
-      offset: "" + offset,
+      offset: '' + offset,
     });
   }
 
@@ -128,7 +128,7 @@ export class KafkaService implements OnApplicationShutdown {
       await this.producer.connect();
       return this.producer;
     } catch (e) {
-      Logger.error(e, "", `KAFKA`);
+      Logger.error(e, '', `KAFKA`);
     }
   }
 
@@ -143,10 +143,10 @@ export class KafkaService implements OnApplicationShutdown {
       response = await this.retry(fn, 1);
       // console.log(response);
     } catch (e) {
-      Logger.error(e, "", "KAFKA");
+      Logger.error(e, '', 'KAFKA');
       const options = {
         custom: {
-          event: "ERROR",
+          event: 'ERROR',
           error: e,
         },
       };
