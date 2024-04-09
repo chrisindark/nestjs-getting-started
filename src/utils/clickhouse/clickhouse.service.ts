@@ -29,14 +29,14 @@ export class ClickhouseService implements OnApplicationShutdown {
         application: 'clickhouse-js',
         database: `${this.configService.get('CLICKHOUSE_DB_DATABASE')}`,
         clickhouse_settings: {},
-        max_open_connections: parseInt(
-          this.configService.get('CLICKHOUSE_DB_MAX_CONNECTIONS'),
-          10,
-        ),
+        max_open_connections:
+          parseInt(
+            this.configService.get('CLICKHOUSE_DB_MAX_CONNECTIONS'),
+            10,
+          ) || 2,
         keep_alive: {
           enabled: true,
-          socket_ttl: 2500,
-          retry_on_expired_socket: true,
+          idle_socket_ttl: 2500,
         },
       });
     } catch (e) {

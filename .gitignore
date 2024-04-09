@@ -52,6 +52,6 @@ lerna-debug.log*
 package-lock.json
 
 gcloud.credentials.staging.json
-gcloud.callsjson.credentials.staging.json
+gcloud.credentials.production.json
 
 .scannerwork
