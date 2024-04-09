@@ -5,8 +5,11 @@ import {
   IsString,
   Max,
   Min,
+  Validate,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { OrderByValidator } from '../validators/orderby.validator';
+import { SortByValidator } from '../validators/sortby.validator';
 
 export class GetCatsQuery {
   @Transform(({ value }) => Number(value), { toClassOnly: true })
@@ -66,6 +69,16 @@ export class FilterCatBody {
   @IsNotEmpty()
   @IsString()
   breed: string;
+
+  @IsString()
+  @IsOptional()
+  @Validate(SortByValidator)
+  sortBy?: string;
+
+  @IsString()
+  @IsOptional()
+  @Validate(OrderByValidator)
+  orderBy?: string;
 }
 
 export class UpdateCatBody {

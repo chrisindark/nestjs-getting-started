@@ -15,13 +15,26 @@ import { CreateCatDto } from './dto/create-cat.dto';
 
 @Injectable()
 export class CatsService {
-  private readonly cats: Cat[] = [];
+  // private readonly cats: Cat[] = [];
   private readonly logger = new Logger(CatsService.name);
 
   constructor(
     @InjectRepository(Cats, 'testMongo')
     private readonly catsRepository: MongoRepository<Cats>,
   ) {}
+
+  createMany = async (payload: Cat[]) => {
+    try {
+      const cats = payload.map((v) => this.catsRepository.create(v));
+      // const response = this.catsRepository.insert(cats);
+      // save() triggers beforeInsert and beforeUpdate
+      const response = this.catsRepository.save(cats);
+      return response;
+    } catch (e) {
+      this.logger.error(e.message, e.stack);
+      throw new InternalServerErrorException(e.message);
+    }
+  };
 
   create = async (payload: Cat) => {
     try {
@@ -122,15 +135,31 @@ export class CatsService {
     }
   };
 
-  filterCats = async (body: FilterCatBody) => {
-    const { limit, offset, name, age, breed } = body;
-    // const payload: GetCatsQuery = {
-    //   limit,
-    //   offset,
-    // };
+  findCatsByColumns = async (params: FilterCatBody) => {
+    const { limit, offset, ...columns } = params;
 
     try {
-      const response = await this.findCats(limit, offset);
+      return await this.catsRepository.find({
+        where: {
+          ...columns,
+        },
+        take: limit,
+        skip: offset,
+      });
+    } catch (e) {
+      this.logger.error(e.message, e.stack);
+      throw new InternalServerErrorException(e.message);
+    }
+  };
+
+  filterCats = async (body: FilterCatBody) => {
+    // const { limit, offset, name, age, breed } = body;
+    const payload: FilterCatBody = {
+      ...body,
+    };
+
+    try {
+      const response = await this.findCatsByColumns(payload);
 
       return {
         success: true,

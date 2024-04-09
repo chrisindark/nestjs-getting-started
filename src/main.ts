@@ -2,9 +2,9 @@
 import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-// import fastifyCookie from '@fastify/cookie';
+import fastifyCookie from '@fastify/cookie';
 import {
-  // FastifyAdapter,
+  FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 // import multipart from '@fastify/multipart';
@@ -12,20 +12,20 @@ import {
 
 import { AppModule } from './modules/app/app.module';
 import { AllExceptionsFilter } from './exceptions/all-exceptions.filter';
-// import { PRODUCTION_KEY, STAGING_KEY } from './constants/constants';
+import { PRODUCTION_KEY, STAGING_KEY } from './constants/constants';
 
 async function bootstrap() {
   Logger.debug(`NODE_ENV - ${process.env.NODE_ENV}`);
 
   try {
-    // const fastifyAdapter = new FastifyAdapter({
-    //   logger:
-    //     process.env.NODE_ENV === PRODUCTION_KEY
-    //       ? false
-    //       : process.env.NODE_ENV === STAGING_KEY
-    //       ? false
-    //       : false,
-    // });
+    const fastifyAdapter = new FastifyAdapter({
+      logger:
+        process.env.NODE_ENV === PRODUCTION_KEY
+          ? false
+          : process.env.NODE_ENV === STAGING_KEY
+            ? false
+            : false,
+    });
     // fileSize limit = 1GB
     // fastifyAdapter.register(require("fastify-multipart"), {
     //   fileSize: 1024 * 1024 * 1024,
@@ -33,25 +33,25 @@ async function bootstrap() {
 
     const app = await NestFactory.create<NestFastifyApplication>(
       AppModule,
-      // fastifyAdapter,
+      fastifyAdapter,
     );
-    // app.register(fastifyCookie, {});
+    app.register(fastifyCookie, {});
     // app.register(multipart, {});
 
     app.useGlobalFilters(new AllExceptionsFilter());
     app.useGlobalPipes(new ValidationPipe({ transform: true }));
     app.enableCors({
       origin:
-        app.get(ConfigService).get('CORS_ORIGIN_WHITELIST').split(',') || [],
+        app.get(ConfigService).get('CORS_ORIGIN_WHITELIST')?.split(',') || [],
       methods:
-        app.get(ConfigService).get('CORS_ALLOW_METHODS').split(',') || [],
-      // allowedHeaders:
-      //   app.get(ConfigService).get('CORS_ALLOW_HEADERS').split(',') || [],
-      // exposedHeaders: [],
+        app.get(ConfigService).get('CORS_ALLOW_METHODS')?.split(',') || [],
+      allowedHeaders:
+        app.get(ConfigService).get('CORS_ALLOW_HEADERS')?.split(',') || [],
+      exposedHeaders: [],
       credentials: true,
-      // maxAge: 0,
-      // preflightContinue: true,
-      // optionsSuccessStatus: 200,
+      maxAge: 0,
+      preflightContinue: true,
+      optionsSuccessStatus: 200,
     });
     app.enableVersioning({
       type: VersioningType.URI,

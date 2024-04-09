@@ -165,4 +165,9 @@ export class UtilsService {
   deepCopy = (v: any) => {
     return JSON.parse(JSON.stringify(v));
   };
+
+  // Function to generate a random integer within a range
+  getRandomInt = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
 }

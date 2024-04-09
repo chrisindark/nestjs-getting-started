@@ -13,6 +13,7 @@ import { Request, Response } from 'express';
 
 import {
   CreateCatBody,
+  FilterCatBody,
   // FilterCatBody,
   GetCatParam,
   GetCatsQuery,
@@ -24,13 +25,13 @@ import { CatsService } from './cats.service';
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
-  // curl --location 'localhost:3000/v1/cats?limit=1&offset=1'
+  // curl --location 'localhost:4000/v1/cats?limit=1&offset=1'
   @Get('/')
   async getCats(@Query() query: GetCatsQuery) {
     return this.catsService.getCats(query);
   }
 
-  // curl --location 'localhost:3000/v1/cats/create' \
+  // curl --location 'localhost:4000/v1/cats/create' \
   // --header 'Content-Type: application/json' \
   // --data '{
   //     "name": "Chris",
@@ -42,7 +43,7 @@ export class CatsController {
     return this.catsService.createCat(body);
   }
 
-  // curl --location 'localhost:3000/v1/cats/65f6fddfac699abfdce2b193'
+  // curl --location 'localhost:4000/v1/cats/65f6fddfac699abfdce2b193'
   @Get('/:_id')
   async getCatById(@Param() params: GetCatParam) {
     return this.catsService.filterCatById(params);
@@ -59,5 +60,19 @@ export class CatsController {
     console.log(params);
     console.log(body);
     return res.status(HttpStatus.OK).json();
+  }
+
+  // curl --location 'localhost:4000/v1/cats/filter' \
+  // --header 'Content-Type: application/json' \
+  // --data '{
+  //     "name": "Luna",
+  //     "age": 12,
+  //     "breed": "Russian Blue",
+  //     "limit": 25,
+  //     "offset": 0
+  // }'
+  @Post('/filter')
+  async filterCats(@Body() body: FilterCatBody) {
+    return this.catsService.filterCats(body);
   }
 }

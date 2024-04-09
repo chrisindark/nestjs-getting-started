@@ -12,6 +12,13 @@ import { PRODUCTION_KEY } from 'src/constants/constants';
       name: 'testMongo',
       useFactory: (configService: ConfigService) => {
         if (process.env.NODE_ENV === PRODUCTION_KEY) {
+          // Logger.debug(configService.get('MONGO_DB_HOST'));
+          // Logger.debug(configService.get('MONGO_DB_PORT'));
+          // Logger.debug(configService.get('MONGO_DB_USERNAME'));
+          // Logger.debug(configService.get('MONGO_DB_PASSWORD'));
+          // Logger.debug(configService.get('MONGO_DB_DATABASE_AUTH_SOURCE'));
+          // Logger.debug(configService.get('MONGO_DB_DATABASE'));
+
           return {
             type: 'mongodb',
             name: 'test',
@@ -25,6 +32,7 @@ import { PRODUCTION_KEY } from 'src/constants/constants';
             entities: [],
             autoLoadEntities: true,
             useUnifiedTopology: true,
+            retryWrites: true,
             connectionLimit: 4,
             extra: {
               connectionLimit: 4,
@@ -35,15 +43,24 @@ import { PRODUCTION_KEY } from 'src/constants/constants';
             keepConnectionAlive: true,
           };
         } else {
+          // Logger.debug(configService.get('MONGO_DB_URL'));
+          // Logger.debug(configService.get('MONGO_DB_DATABASE'));
+
           return {
             type: 'mongodb',
-            name: 'testMongo',
+            name: 'test',
             // useNewUrlParser: true,
             url: configService.get('MONGO_DB_URL'),
+            // host: configService.get('MONGO_DB_HOST'),
+            // port: parseInt(configService.get('MONGO_DB_PORT'), 10),
+            // username: configService.get('MONGO_DB_USERNAME'),
+            // password: configService.get('MONGO_DB_PASSWORD'),
+            // authSource: configService.get('MONGO_DB_DATABASE_AUTH_SOURCE'),
+            database: configService.get('MONGO_DB_DATABASE'),
             entities: [],
             autoLoadEntities: true,
             useUnifiedTopology: true,
-            database: configService.get('MONGO_DB_DATABASE'),
+            retryWrites: true,
             connectionLimit: 2,
             extra: {
               connectionLimit: 2,
