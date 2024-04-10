@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common';
+import { Global, Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
@@ -44,22 +44,27 @@ import { PRODUCTION_KEY } from 'src/constants/constants';
           };
         } else {
           // Logger.debug(configService.get('MONGO_DB_URL'));
-          // Logger.debug(configService.get('MONGO_DB_DATABASE'));
+          Logger.debug(configService.get('MONGO_DB_HOST'));
+          Logger.debug(configService.get('MONGO_DB_PORT'));
+          // Logger.debug(configService.get('MONGO_DB_USERNAME'));
+          // Logger.debug(configService.get('MONGO_DB_PASSWORD'));
+          // Logger.debug(configService.get('MONGO_DB_DATABASE_AUTH_SOURCE'));
+          Logger.debug(configService.get('MONGO_DB_DATABASE'));
 
           return {
             type: 'mongodb',
             name: 'test',
             // useNewUrlParser: true,
-            url: configService.get('MONGO_DB_URL'),
-            // host: configService.get('MONGO_DB_HOST'),
-            // port: parseInt(configService.get('MONGO_DB_PORT'), 10),
+            // url: configService.get('MONGO_DB_URL'),
+            host: configService.get('MONGO_DB_HOST'),
+            port: parseInt(configService.get('MONGO_DB_PORT'), 10),
             // username: configService.get('MONGO_DB_USERNAME'),
             // password: configService.get('MONGO_DB_PASSWORD'),
-            // authSource: configService.get('MONGO_DB_DATABASE_AUTH_SOURCE'),
+            // authSource: 'admin',
             database: configService.get('MONGO_DB_DATABASE'),
             entities: [],
             autoLoadEntities: true,
-            useUnifiedTopology: true,
+            // useUnifiedTopology: true,
             retryWrites: true,
             connectionLimit: 2,
             extra: {
