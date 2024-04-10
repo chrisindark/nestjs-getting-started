@@ -63,7 +63,7 @@ export class CatsSeederService {
             catsToInsert.push(this.generateRandomCat());
           }
           const response = await this.catsService.createMany(catsToInsert);
-          this.logger.log(JSON.stringify(response));
+          this.logger.log(counter);
 
           counter += BATCH_SIZE;
         } else {

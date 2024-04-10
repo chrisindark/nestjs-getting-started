@@ -28,7 +28,7 @@ export class CatsService {
       const cats = payload.map((v) => this.catsRepository.create(v));
       // const response = this.catsRepository.insert(cats);
       // save() triggers beforeInsert and beforeUpdate
-      const response = this.catsRepository.save(cats);
+      const response = await this.catsRepository.save(cats);
       return response;
     } catch (e) {
       this.logger.error(e.message, e.stack);
