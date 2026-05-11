@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AppConfigModule } from '@app/config';
+import { AppLoggerModule } from '@app/logger';
 
 import { ReportsQueueModule } from './modules/reportsQueue/reportsQueue.module';
 
@@ -13,6 +14,10 @@ import { ReportsQueueModule } from './modules/reportsQueue/reportsQueue.module';
  * `<name>.module.ts`, then import the new module here.
  */
 @Module({
-  imports: [AppConfigModule.forRoot(), ReportsQueueModule],
+  imports: [
+    AppConfigModule.forRoot(),
+    AppLoggerModule.forRoot({ appName: 'queue-consumer' }),
+    ReportsQueueModule,
+  ],
 })
 export class QueueConsumerAppModule {}

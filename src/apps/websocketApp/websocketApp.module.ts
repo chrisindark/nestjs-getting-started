@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 
 import { AppConfigModule } from '@app/config';
+import { AppLoggerModule } from '@app/logger';
 
 import { SentryModule } from 'src/interceptors/sentry/sentry.module';
 import { LoggerMiddleware } from 'src/middlewares/logger.middleware';
@@ -15,6 +16,7 @@ import { EventsModule } from './modules/events/events.module';
 @Module({
   imports: [
     AppConfigModule.forRoot(),
+    AppLoggerModule.forRoot({ appName: 'websocket' }),
     SentryModule,
     EventsModule,
     // MessageModule

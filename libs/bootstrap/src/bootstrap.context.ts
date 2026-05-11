@@ -1,5 +1,6 @@
-import { INestApplicationContext, Logger, Type } from '@nestjs/common';
+import { INestApplicationContext, Type } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { Logger as PinoLogger } from 'nestjs-pino';
 
 import type { ContextBootstrapOptions } from './options.types';
 
@@ -14,13 +15,15 @@ export async function bootstrapContextApp(
   module: Type<unknown>,
   options: ContextBootstrapOptions,
 ): Promise<INestApplicationContext> {
-  const logger = new Logger('Bootstrap');
-  logger.debug(`NODE_ENV - ${process.env.NODE_ENV ?? 'development'}`);
-
   const app = await NestFactory.createApplicationContext(module, {
     bufferLogs: true,
     ...options.nestOptions,
   });
+
+  app.useLogger(app.get(PinoLogger));
+  const logger = app.get(PinoLogger);
+  logger.debug(`NODE_ENV - ${process.env.NODE_ENV ?? 'development'}`);
+
   app.enableShutdownHooks();
 
   if (options.runOnce) {

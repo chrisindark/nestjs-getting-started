@@ -1,4 +1,4 @@
-import { Logger, Type, ValidationPipe, VersioningType } from '@nestjs/common';
+import { Type, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import fastifyCookie from '@fastify/cookie';
@@ -6,6 +6,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { Logger as PinoLogger } from 'nestjs-pino';
 
 import { AllExceptionsFilter } from './all-exceptions.filter';
 import type { HttpBootstrapOptions } from './options.types';
@@ -20,9 +21,6 @@ export async function bootstrapHttpApp(
   module: Type<unknown>,
   options: HttpBootstrapOptions,
 ): Promise<NestFastifyApplication> {
-  const logger = new Logger('Bootstrap');
-  logger.debug(`NODE_ENV - ${process.env.NODE_ENV ?? 'development'}`);
-
   const adapter = new FastifyAdapter({ logger: false, trustProxy: true });
   const app = await NestFactory.create<NestFastifyApplication>(
     module,
@@ -32,6 +30,10 @@ export async function bootstrapHttpApp(
       ...options.nestOptions,
     },
   );
+
+  app.useLogger(app.get(PinoLogger));
+  const logger = app.get(PinoLogger);
+  logger.debug(`NODE_ENV - ${process.env.NODE_ENV ?? 'development'}`);
 
   await app.register(fastifyCookie);
 

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AppConfigModule } from '@app/config';
+import { AppLoggerModule } from '@app/logger';
 
 import { CronModule } from './modules/cron/cron.module';
 
@@ -12,6 +13,10 @@ import { CronModule } from './modules/cron/cron.module';
  * dependency-light so the cron pod boots fast and has a small blast radius.
  */
 @Module({
-  imports: [AppConfigModule.forRoot(), CronModule],
+  imports: [
+    AppConfigModule.forRoot(),
+    AppLoggerModule.forRoot({ appName: 'cron' }),
+    CronModule,
+  ],
 })
 export class CronAppModule {}

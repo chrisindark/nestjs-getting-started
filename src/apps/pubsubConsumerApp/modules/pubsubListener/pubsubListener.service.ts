@@ -1,16 +1,26 @@
 import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
+import {
+  CorrelationService,
+  correlationFromPubSubAttributes,
+} from '@app/logger';
 import { PubSubIncomingMessage, PubSubService } from '@app/messaging';
 
 /**
- * Subscribes to Google Cloud Pub/Sub subscriptions and processes messages
- * directly. If you need durable retries / DLQ behaviour for a particular
- * subscription, inject `PublisherService` and call `toQueue(...)` from the
- * handler — the queue consumer app will then own retries.
+ * Subscribes to Google Cloud Pub/Sub subscriptions and processes
+ * messages directly. Each delivered message is wrapped in its own
+ * correlation context, picking up the upstream id from
+ * `message.attributes.correlationId` when present and falling back to
+ * a fresh uuid otherwise.
  *
- * Subscriptions come from `PUBSUB_SUBSCRIPTIONS` (comma-separated) or, for
- * backwards compatibility, `GCLOUD_PUBSUB_TEST_SUBSCRIPTION`.
+ * If you need durable retries / DLQ behaviour for a particular
+ * subscription, inject `PublisherService` and call `toQueue(...)` from
+ * the handler — the queue consumer app will then own retries and the
+ * correlation id propagates through to the bull job automatically.
+ *
+ * Subscriptions come from `PUBSUB_SUBSCRIPTIONS` (comma-separated) or,
+ * for backwards compatibility, `GCLOUD_PUBSUB_TEST_SUBSCRIPTION`.
  */
 @Injectable()
 export class PubSubListenerService implements OnApplicationBootstrap {
@@ -19,6 +29,7 @@ export class PubSubListenerService implements OnApplicationBootstrap {
   constructor(
     private readonly pubsub: PubSubService,
     private readonly config: ConfigService,
+    private readonly correlation: CorrelationService,
   ) {}
 
   onApplicationBootstrap(): void {
@@ -32,28 +43,35 @@ export class PubSubListenerService implements OnApplicationBootstrap {
     }
   }
 
-  private async handle(subscription: string, message: PubSubIncomingMessage) {
-    try {
-      const body = this.safeParseJson(message.data);
-      this.logger.log(
-        `pubsub message from ${subscription} id=${message.id} body=${JSON.stringify(body)}`,
-      );
+  private handle(subscription: string, message: PubSubIncomingMessage) {
+    const incoming = correlationFromPubSubAttributes(message.attributes);
+    return this.correlation.runWithIncoming(
+      incoming,
+      `pubsub:${subscription}`,
+      async () => {
+        try {
+          const body = this.safeParseJson(message.data);
+          this.logger.log(
+            `pubsub message id=${message.id} body=${JSON.stringify(body)}`,
+          );
 
-      // TODO: route on `subscription` / `message.attributes` and do the work.
-      //       Throw to nack and have the source redeliver.
+          // TODO: route on `subscription` / `message.attributes` and do the work.
+          //       Throw to nack and have the source redeliver.
 
-      if (message.ackWithResponse) {
-        await message.ackWithResponse();
-      } else {
-        message.ack();
-      }
-    } catch (e) {
-      this.logger.error(
-        `handler for ${subscription} message ${message.id} threw: ${(e as Error).message}`,
-        (e as Error).stack,
-      );
-      message.nack();
-    }
+          if (message.ackWithResponse) {
+            await message.ackWithResponse();
+          } else {
+            message.ack();
+          }
+        } catch (e) {
+          this.logger.error(
+            `handler for ${subscription} message ${message.id} threw: ${(e as Error).message}`,
+            (e as Error).stack,
+          );
+          message.nack();
+        }
+      },
+    );
   }
 
   private subscriptionsFromEnv(): string[] {

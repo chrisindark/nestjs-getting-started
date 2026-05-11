@@ -16,10 +16,17 @@ export class PubSubService implements OnApplicationShutdown {
     });
   }
 
-  async publish(topic: string, payload: unknown): Promise<string | null> {
+  async publish(
+    topic: string,
+    payload: unknown,
+    options: { attributes?: Record<string, string> } = {},
+  ): Promise<string | null> {
     try {
       const data = Buffer.from(JSON.stringify(payload));
-      return await this.client.topic(topic).publishMessage({ data });
+      return await this.client.topic(topic).publishMessage({
+        data,
+        attributes: options.attributes,
+      });
     } catch (e) {
       this.logger.error(
         `publish to ${topic} failed: ${(e as Error).message}`,

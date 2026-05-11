@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AppConfigModule } from '@app/config';
+import { AppLoggerModule } from '@app/logger';
 
 import { PubSubListenerModule } from './modules/pubsubListener/pubsubListener.module';
 
@@ -9,6 +10,10 @@ import { PubSubListenerModule } from './modules/pubsubListener/pubsubListener.mo
  * subscription handler. Bootstraps without an HTTP server.
  */
 @Module({
-  imports: [AppConfigModule.forRoot(), PubSubListenerModule],
+  imports: [
+    AppConfigModule.forRoot(),
+    AppLoggerModule.forRoot({ appName: 'pubsub-consumer' }),
+    PubSubListenerModule,
+  ],
 })
 export class PubSubConsumerAppModule {}

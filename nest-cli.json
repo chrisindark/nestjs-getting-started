@@ -91,6 +91,15 @@
         "tsConfigPath": "libs/config/tsconfig.lib.json"
       }
     },
+    "logger": {
+      "type": "library",
+      "root": "libs/logger",
+      "sourceRoot": "libs/logger/src",
+      "entryFile": "index",
+      "compilerOptions": {
+        "tsConfigPath": "libs/logger/tsconfig.lib.json"
+      }
+    },
     "queue": {
       "type": "library",
       "root": "libs/queue",

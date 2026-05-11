@@ -28,6 +28,8 @@
       "@app/bootstrap/*": ["libs/bootstrap/src/*"],
       "@app/config": ["libs/config/src"],
       "@app/config/*": ["libs/config/src/*"],
+      "@app/logger": ["libs/logger/src"],
+      "@app/logger/*": ["libs/logger/src/*"],
       "@app/queue": ["libs/queue/src"],
       "@app/queue/*": ["libs/queue/src/*"],
       "@app/messaging": ["libs/messaging/src"],

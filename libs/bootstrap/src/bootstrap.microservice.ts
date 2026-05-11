@@ -1,7 +1,8 @@
-import { Logger, Type, ValidationPipe } from '@nestjs/common';
+import { Type, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import type { INestMicroservice } from '@nestjs/common';
 import type { MicroserviceOptions } from '@nestjs/microservices';
+import { Logger as PinoLogger } from 'nestjs-pino';
 
 import { AllExceptionsFilter } from './all-exceptions.filter';
 
@@ -24,9 +25,6 @@ export async function bootstrapMicroservice(
   module: Type<unknown>,
   options: MicroserviceBootstrapOptions,
 ): Promise<INestMicroservice> {
-  const logger = new Logger('Bootstrap');
-  logger.debug(`NODE_ENV - ${process.env.NODE_ENV ?? 'development'}`);
-
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     module,
     {
@@ -34,6 +32,10 @@ export async function bootstrapMicroservice(
       bufferLogs: true,
     },
   );
+
+  app.useLogger(app.get(PinoLogger));
+  const logger = app.get(PinoLogger);
+  logger.debug(`NODE_ENV - ${process.env.NODE_ENV ?? 'development'}`);
 
   app.useGlobalFilters(new AllExceptionsFilter());
   if (options.enableValidation !== false) {
