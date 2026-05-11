@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/apps/api"
+  },
+  "include": ["src/**/*", "libs/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "test",
+    "**/*.spec.ts",
+    "src/cronmain.ts",
+    "src/pubsubConsumerMain.ts",
+    "src/kafkaConsumerMain.ts",
+    "src/queueConsumerMain.ts",
+    "src/websocketmain.ts",
+    "src/clmain.ts"
+  ]
+}

@@ -1,21 +1,40 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "target": "es2021",
+    "lib": ["ES2022"],
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "resolveJsonModule": true,
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
+
+    "strictBindCallApply": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+
+    "paths": {
+      "@app/bootstrap": ["libs/bootstrap/src"],
+      "@app/bootstrap/*": ["libs/bootstrap/src/*"],
+      "@app/config": ["libs/config/src"],
+      "@app/config/*": ["libs/config/src/*"],
+      "@app/queue": ["libs/queue/src"],
+      "@app/queue/*": ["libs/queue/src/*"],
+      "@app/messaging": ["libs/messaging/src"],
+      "@app/messaging/*": ["libs/messaging/src/*"],
+      "@app/publisher": ["libs/publisher/src"],
+      "@app/publisher/*": ["libs/publisher/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
 }

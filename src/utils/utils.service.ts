@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 // import { ConfigService } from '@nestjs/config';
-import * as moment from 'moment';
+import moment from 'moment';
 import * as fs from 'fs';
 import { promisify } from 'util';
 

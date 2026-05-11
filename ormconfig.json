@@ -3,7 +3,7 @@
   "host": "localhost",
   "port": 3306,
   "username": "christopher",
-  "password": "trell",
+  "password": "changeme",
   "database": "test",
   "entities": [],
   "synchronize": true

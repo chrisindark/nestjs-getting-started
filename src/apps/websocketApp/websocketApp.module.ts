@@ -4,11 +4,9 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 
-import configuration from '../../config/configuration';
+import { AppConfigModule } from '@app/config';
 
-import { PRODUCTION_KEY, STAGING_KEY } from 'src/constants/constants';
 import { SentryModule } from 'src/interceptors/sentry/sentry.module';
 import { LoggerMiddleware } from 'src/middlewares/logger.middleware';
 import { EventsModule } from './modules/events/events.module';
@@ -16,17 +14,7 @@ import { EventsModule } from './modules/events/events.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      cache: true,
-      envFilePath:
-        process.env.NODE_ENV === PRODUCTION_KEY
-          ? '.env.production'
-          : process.env.NODE_ENV === STAGING_KEY
-            ? '.env.staging'
-            : '.env.local',
-      load: [configuration],
-    }),
+    AppConfigModule.forRoot(),
     SentryModule,
     EventsModule,
     // MessageModule

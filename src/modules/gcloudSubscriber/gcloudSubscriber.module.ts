@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 
-import { GCloudSubscriberService } from 'src/modules/gcloudSubscriber/gcloudSubscriber.service';
-import { GCloudSubscriberController } from 'src/modules/gcloudSubscriber/gcloudSubscriber.controller';
+import { PubSubModule } from '@app/messaging';
+
+import { GCloudSubscriberService } from './gcloudSubscriber.service';
+import { GCloudSubscriberController } from './gcloudSubscriber.controller';
 
 @Module({
-  imports: [],
+  imports: [PubSubModule],
   providers: [GCloudSubscriberService],
   controllers: [GCloudSubscriberController],
 })

@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
-import configuration from '../../config/configuration';
+import { AppConfigModule } from '@app/config';
+import { PublisherModule } from '@app/publisher';
+import { QueueName } from '@app/queue';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PingModule } from '../../modules/ping/ping.module';
@@ -27,14 +29,12 @@ import { CatsModule } from '../../cats/cats.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath:
-        process.env.NODE_ENV === 'production'
-          ? '.env.production'
-          : process.env.NODE_ENV === 'staging'
-            ? '.env.staging'
-            : '.env.local',
-      load: [configuration],
+    AppConfigModule.forRoot(),
+    PublisherModule.forRoot({
+      withKafka: true,
+      withPubSub: true,
+      queues: [QueueName.Reports],
+      kafkaClientId: 'api',
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', '..', 'dist', 'client'),

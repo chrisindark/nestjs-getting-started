@@ -19,7 +19,7 @@ sudo apt install nginx
 sudo apt install certbot python3-certbot-nginx
 sudo systemctl enable nginx
 
-sudo certbot --nginx -d voice-tools.justcall.io
+sudo certbot --nginx -d example.com
 sudo systemctl status certbot.timer
 sudo certbot renew --dry-run
 
@@ -67,7 +67,7 @@ $ yarn run start:prod
 
 <!-- apt install haproxy -->
 
-```bash
+````bash
 # development image build
 $ docker image build -f Dockerfile.dev --tag nestjs-getting-started/local:latest --platform=linux/amd64 .
 
@@ -94,7 +94,7 @@ $ yarn run test:e2e
 
 # test coverage
 $ yarn run test:cov
-```
+````
 
 ## Nginx
 
@@ -171,3 +171,9 @@ npx husky install
 ## To check for package upgrades
 
 npx ncu -i
+
+Suggested next moves
+Decide group-id strategy for Kafka — each consumer pod gets its own KAFKA_CONSUMER_GROUP_ID; you probably want one stable group id per environment.
+Add concrete @EventPattern controllers in kafkaConsumerApp for your real topics; the EventsController is just a demo.
+Promote PUBSUB_SUBSCRIPTIONS (and any kafka topic registry) into libs/config env schema so missing config fails fast at boot.
+Add Dockerfile per app pointing at the matching dist/apps/<name> entry — the previous single Dockerfile is no longer fit-for-purpose.
