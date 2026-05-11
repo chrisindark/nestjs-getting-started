@@ -1,11 +1,12 @@
 import { Global, Module } from '@nestjs/common';
 
+import { PubSubModule } from '@app/messaging';
+
 import { EmailService } from './email.service';
-import { GCloudPubSubModule } from 'src/utils/gcloudPubSub/gcloudPubSub.module';
 
 @Global()
 @Module({
-  imports: [GCloudPubSubModule],
+  imports: [PubSubModule],
   providers: [EmailService],
   exports: [EmailService],
 })

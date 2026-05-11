@@ -1,4 +1,12 @@
-import { Column, Entity, ObjectId, ObjectIdColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  ObjectId,
+  ObjectIdColumn,
+} from 'typeorm';
+import * as moment from 'moment';
 
 @Entity()
 export class Cats {
@@ -15,8 +23,19 @@ export class Cats {
   breed: string;
 
   @Column()
-  createdAt: string;
+  createdAt: Date;
 
   @Column()
-  updatedAt: string;
+  updatedAt: Date;
+
+  @BeforeInsert()
+  updateTimestampsBeforeInsert() {
+    this.createdAt = moment.utc().toDate();
+    this.updatedAt = moment.utc().toDate();
+  }
+
+  @BeforeUpdate()
+  updateTimestampsBeforeUpdate() {
+    this.updatedAt = moment.utc().toDate();
+  }
 }

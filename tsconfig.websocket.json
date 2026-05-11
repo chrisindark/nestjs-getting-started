@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/apps/websocket"
+  },
+  "include": ["src/**/*", "libs/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "test",
+    "**/*.spec.ts",
+    "src/main.ts",
+    "src/cronmain.ts",
+    "src/pubsubConsumerMain.ts",
+    "src/kafkaConsumerMain.ts",
+    "src/queueConsumerMain.ts",
+    "src/clmain.ts"
+  ]
+}

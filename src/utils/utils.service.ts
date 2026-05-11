@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 // import { ConfigService } from '@nestjs/config';
-import * as moment from 'moment';
+import moment from 'moment';
 import * as fs from 'fs';
 import { promisify } from 'util';
 
@@ -164,5 +164,10 @@ export class UtilsService {
 
   deepCopy = (v: any) => {
     return JSON.parse(JSON.stringify(v));
+  };
+
+  // Function to generate a random integer within a range
+  getRandomInt = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { GCloudPubSubService } from 'src/utils/gcloudPubSub/gcloudPubSub.service';
+import { PubSubService } from '@app/messaging';
 
 export interface EmailTemplateDataPayload {
   userName: string;
@@ -25,26 +25,22 @@ export interface EmailPublishMessagePayload {
 export class EmailService {
   constructor(
     private readonly configService: ConfigService,
-    private readonly gCloudPubSubService: GCloudPubSubService,
+    private readonly pubsub: PubSubService,
   ) {}
 
-  async publishMessageToJustcallEmailsTopic(data: EmailPublishMessagePayload) {
-    const payload = {
-      event_type: 'EMAIL',
-      data,
-    };
-    const response = await this.gCloudPubSubService.publishMessageTopic(
-      this.configService.getOrThrow('GCLOUD_PUBSUB_EMAILS_TOPIC'),
-      payload,
+  async publishEmailEvent(data: EmailPublishMessagePayload) {
+    const payload = { event_type: 'EMAIL', data };
+    const topic = this.configService.getOrThrow<string>(
+      'GCLOUD_PUBSUB_EMAILS_TOPIC',
     );
+    const messageId = await this.pubsub.publish(topic, payload);
 
-    if (!response.message) {
-      const errorMessage = `Could not publish justcall email message for: ${JSON.stringify(
-        payload,
-      )}`;
-      throw Error(errorMessage);
+    if (!messageId) {
+      throw new Error(
+        `Could not publish email event for: ${JSON.stringify(payload)}`,
+      );
     }
 
-    return response;
+    return { message: messageId, success: true };
   }
 }

@@ -1,51 +1,22 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { Module } from '@nestjs/common';
 
-import configuration from '../../config/configuration';
+import { AppConfigModule } from '@app/config';
+import { AppLoggerModule } from '@app/logger';
 
-import { LoggerMiddleware } from '../../middlewares/logger.middleware';
-
-// import { SentryModule } from '../../interceptors/sentry/sentry.module';
-import { MysqlModule } from 'src/utils/mysql/mysql.module';
-import { PingModule } from '../../modules/ping/ping.module';
-import { PRODUCTION_KEY, STAGING_KEY } from 'src/constants/constants';
-import { UtilsModule } from 'src/utils/utils.module';
 import { CronModule } from './modules/cron/cron.module';
-import { BullQueueModule } from 'src/utils/bull/bullQueue.module';
-import { BullQueueConsumerModule } from 'src/utils/bull/bullQueueConsumer.module';
 
+/**
+ * Cron service is producer-only: it schedules ticks via `@nestjs/schedule`
+ * and pushes work onto the appropriate transport (Bull queue, Kafka topic,
+ * Pub/Sub topic) via the shared `PublisherService`. All side-effect work
+ * lives in the dedicated consumer services. Keep this module
+ * dependency-light so the cron pod boots fast and has a small blast radius.
+ */
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      cache: true,
-      envFilePath:
-        process.env.NODE_ENV === PRODUCTION_KEY
-          ? '.env.production'
-          : process.env.NODE_ENV === STAGING_KEY
-            ? '.env.staging'
-            : '.env.local',
-      load: [configuration],
-    }),
-    // SentryModule,
-    MysqlModule,
-    PingModule,
-    UtilsModule,
+    AppConfigModule.forRoot(),
+    AppLoggerModule.forRoot({ appName: 'cron' }),
     CronModule,
-    BullQueueModule,
-    BullQueueConsumerModule,
   ],
 })
-export class CronAppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(LoggerMiddleware).forRoutes({
-      path: '*',
-      method: RequestMethod.ALL,
-    });
-  }
-}
+export class CronAppModule {}

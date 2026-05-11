@@ -2,7 +2,7 @@ import { Injectable, Logger, OnApplicationShutdown } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TwilioAccountStatus } from './twilio.enum';
 
-import * as Twilio from 'twilio';
+import Twilio from 'twilio';
 import { TWILIO_ACCOUNT_LIST_API_LIMIT } from './twilio.constant';
 
 @Injectable()
